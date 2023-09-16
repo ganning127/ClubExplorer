@@ -1,14 +1,10 @@
+import { Heading } from '@chakra-ui/react';
 import Head from 'next/head'
 import clientPromise from '../lib/mongodb'
-import type { InferGetServerSidePropsType, GetServerSideProps } from 'next'
 
-type ConnectionStatus = {
-  isConnected: boolean
-}
 
-export const getServerSideProps: GetServerSideProps<
-  ConnectionStatus
-> = async () => {
+
+export const getServerSideProps = async () => {
   try {
     await clientPromise
     // `await clientPromise` will use the default database passed in the MONGODB_URI
@@ -33,7 +29,7 @@ export const getServerSideProps: GetServerSideProps<
 
 export default function Home({
   isConnected,
-}: InferGetServerSidePropsType<typeof getServerSideProps>) {
+}) {
   return (
     <div className="container">
       <Head>
@@ -42,6 +38,7 @@ export default function Home({
       </Head>
 
       <main>
+        
         <h1 className="title">
           Welcome to <a href="https://nextjs.org">Next.js with MongoDB!</a>
         </h1>
@@ -90,6 +87,7 @@ export default function Home({
             </p>
           </a>
         </div>
+        <Heading>If you're seeing this as bold, in big letters, then Chakra UI is working properly too.</Heading>
       </main>
 
       <footer>
