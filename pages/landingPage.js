@@ -39,7 +39,7 @@ return (
           Georgia Tech Club Explorer
         </h1>
         
-        <img src="idk yet" />
+        <img width="400" height="400" src="/img/Georgia-Tech-Yellow-Jackets-Logo.png" />
 
         <h2 className="button">Explore Clubs</h2>
         <h2 className="button">How it works</h2>
