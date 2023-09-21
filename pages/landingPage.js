@@ -39,7 +39,7 @@ return (
           Georgia Tech Club Explorer
         </h1>
         
-        <img width="400" height="400" src="/img/Georgia-Tech-Yellow-Jackets-Logo.png" />
+        <img className="landingImage" width="400" height="400" src="/img/Georgia-Tech-Yellow-Jackets-Logo.png" />
 
         <h2 className="button">Explore Clubs</h2>
         <h2 className="button">How it works</h2>
@@ -47,11 +47,20 @@ return (
 
 
 
-      {/* <style jsx>{`
-
+      <style jsx>{`
+        .title {
+            margin: 0;
+            line-height: 1.15;
+            font-size: 4rem;
+            text-align: center;
+          }
+        .landingImage{
+            text-align: right;
+        }
+        
 `     }</style>
 
-      <style jsx global>{
+      {/*<style jsx global>{
 
       }</style> */}
 
