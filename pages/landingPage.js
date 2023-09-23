@@ -1,7 +1,7 @@
 import Head from 'next/head'
 import clientPromise from '../lib/mongodb'
 import { Button, Center, Box, Image, Flex, Badge, Text, ButtonGroup } from '@chakra-ui/react'
-  
+
 export const getServerSideProps = async () => {
     try {
       await clientPromise
