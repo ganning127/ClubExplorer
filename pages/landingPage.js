@@ -158,12 +158,11 @@ return (
           height: 30px;
           color: white;
         }
-        
 `     }</style>
-
       {/*<style jsx global>{
 
       }</style> */}
+
     </div>
     )
   }
