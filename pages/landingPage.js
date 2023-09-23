@@ -1,6 +1,6 @@
 import Head from 'next/head'
 import clientPromise from '../lib/mongodb'
-import { Button, ButtonGroup } from '@chakra-ui/react'
+import { Button, Center, Box, Image, Flex, Badge, Text, ButtonGroup } from '@chakra-ui/react'
   
 export const getServerSideProps = async () => {
     try {
@@ -63,6 +63,49 @@ return (
         <p className='paragraph'>
           This is how it works! Idk yet so this is just dummy text. I am going to smash my keyboard to test whether the text centers properly on the site with multiple sentences.<br></br><br></br> asfdhjkasdhkjfjahksdlhjkldafshjkldfsahjasdfhjkladfshjkljklahsdhbfasjivbnasljkegbfljksdhfaoisuwbfcdljsiahrgjlsadbfouaeuibcvhljdsadbgfosiadjbvlasjdhfsudlivblsuaecdbsvlusagheladvbaslufhblasjkdbvlaseuibvljsbvliasdj ;-P
         </p>
+        <div>
+        <Flex
+            justifyContent="center"
+            //minHeight="50px"
+            alignItems="center"
+            flexWrap="wrap"
+            paddingBottom={40}
+        >
+          {Array.from({ length: 3 }).map((_, index) => (
+            <Box
+              key={index}
+              p="5"
+              maxW="320px"
+              mx={4}
+            >
+              <Center h="50vh" padding={1}>
+                <Box p="5" maxW="320px" borderWidth="3px">
+                  <Image borderRadius="md" src="https://www.wheeltest.com/cm/dpl/images/create/placeholder(1).jpg" />
+                  <Flex align="baseline" mt={2}>
+                    <Badge colorScheme="blue">Tags</Badge>
+                    <Text
+                      textTransform="uppercase"
+                      fontSize="sm"
+                      paddingLeft={2}
+                      color="yellow.600"
+                    >
+                      Cool &bull; Goofy
+                    </Text>
+                  </Flex>
+                  <Text mt={2} fontSize="xl" fontWeight="semibold" lineHeight="short">
+                    Random Club
+                  </Text>
+                  <Text mt={2}>Description: yoooooooooooooooo waddup</Text>
+                </Box>
+              </Center>
+            </Box>
+          ))}
+        </Flex>
+        </div>
+
+        <p className="copyrightContainer">
+          Copyright 2023 - GT Web Dev
+        </p>
       </main>
 
 
@@ -105,11 +148,25 @@ return (
           text-align: center; /* Center the text within the container */
           margin: 0 auto; /* Center the container horizontally */
           max-width: 700px;
+          padding-bottom:40px;
         }
         .landingImage{
           position: absolute;
           top: 0;
           right: 0;
+        }
+        .copyrightContainer {
+          font-size:2 0px;
+          box-sizing: border-box;
+          padding-right: 20px;
+          padding-left: 20px;
+          background-color: black;
+          text-align: center;
+          position: absolute;
+          bottom: 0;
+          width: 100%;
+          height: 30px;
+          color: white;
         }
         
 `     }</style>
