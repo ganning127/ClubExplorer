@@ -40,7 +40,7 @@ return (
           Club Explorer
         </h1>
         <div>
-          <Button  size='md' height='48px' width='200px' border='2px' color="yellow.500" textColor="white" background="yellow.500"
+          <Button size='lg' height='64px' width='300px' border='2px' color="yellow.500" textColor="white" background="yellow.500" fontSize={32} mt={4} mb={4} ml={4} mr={4}
           _hover={{
             borderColor:"yellow.500",
             textColor: "yellow.500",
@@ -48,7 +48,7 @@ return (
             textColor: "black",
           }}>Explore Clubs</Button>
 
-          <Button size='md' height='48px' width='200px' border='2px' color="yellow.500" textColor="white" background="yellow.500"
+          <Button size='lg' height='64px' width='300px' border='2px' color="yellow.500" textColor="white" background="yellow.500" fontSize={32} mt={4} mb={4} ml={4} mr={4}
           _hover={{
             borderColor:"yellow.500",
             textColor: "yellow.500",
@@ -61,12 +61,14 @@ return (
           How It Works
         </h2>
         <p className='paragraph'>
-          This is how it works! Idk yet so this is just dummy text. I am going to smash my keyboard to test whether the text centers properly on the site with multiple sentences.<br></br><br></br> asfdhjkasdhkjfjahksdlhjkldafshjkldfsahjasdfhjkladfshjkljklahsdhbfasjivbnasljkegbfljksdhfaoisuwbfcdljsiahrgjlsadbfouaeuibcvhljdsadbgfosiadjbvlasjdhfsudlivblsuaecdbsvlusagheladvbaslufhblasjkdbvlaseuibvljsbvliasdj ;-P
+          This is how it works! Idk yet so this is just dummy text. 
+          I am going to smash my keyboard to test whether the text centers properly on the site with multiple sentences.<br></br><br></br> 
+          asfdhjkasdhkjfjahksdlhjkldafshjkldfsahjasdfhjkladfshjkljklahsdhbfasjivbnasljkegbfljksdhfaoisuwbfcdljsiahrgjlsadbfouaeuibcvhljdsadbgf
+          osiadjbvlasjdhfsudlivblsuaecdbsvlusagheladvbaslufhblasjkdbvlaseuibvljsbvliasdj ;-P
         </p>
         <div>
         <Flex
             justifyContent="center"
-            //minHeight="50px"
             alignItems="center"
             flexWrap="wrap"
             paddingBottom={40}
@@ -102,7 +104,6 @@ return (
           ))}
         </Flex>
         </div>
-
         <p className="copyrightContainer">
           Copyright 2023 - GT Web Dev
         </p>
