@@ -1,5 +1,6 @@
 import Head from 'next/head'
 import clientPromise from '../lib/mongodb'
+import NavBar from "./NavBar"
 import { Button, Center, Box, Image, Flex, Badge, Text, ButtonGroup } from '@chakra-ui/react'
 
 export const getServerSideProps = async () => {
@@ -26,6 +27,7 @@ return (
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main>
+        <NavBar></NavBar>
         <h1 className="title">
           Georgia Tech<br></br>
           Club Explorer
