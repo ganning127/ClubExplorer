@@ -27,10 +27,11 @@ export default function WithSubnavigation() {
   const { isOpen, onToggle } = useDisclosure()
 
   return (
-    <Box>
+    <Box bg="#16425B">
       <Flex
-        bg={useColorModeValue('white', 'gray.800')}
-        color={useColorModeValue('gray.600', 'white')}
+        // bg={useColorModeValue('white', 'gray.800')}
+        bg="#16425B"
+        color="white"
         minH={'60px'}
         py={{ base: 2 }}
         px={{ base: 4 }}
@@ -44,8 +45,12 @@ export default function WithSubnavigation() {
           display={{ base: 'flex', md: 'none' }}>
           <IconButton
             onClick={onToggle}
+            color="white"
             icon={isOpen ? <CloseIcon w={3} h={3} /> : <HamburgerIcon w={5} h={5} />}
             variant={'ghost'}
+            _hover={{
+              bg: "#0b2330"
+            }}
             aria-label={'Toggle Navigation'}
           />
         </Flex>
@@ -53,7 +58,7 @@ export default function WithSubnavigation() {
           <Text
             textAlign={useBreakpointValue({ base: 'center', md: 'left' })}
             fontFamily={'heading'}
-            color={useColorModeValue('gray.800', 'white')}>
+            color="white">
             Logo
           </Text>
 
@@ -67,7 +72,7 @@ export default function WithSubnavigation() {
           justify={'flex-end'}
           direction={'row'}
           spacing={6}>
-          <Button as={'a'} fontSize={'sm'} fontWeight={400} variant={'link'} href={'#'}>
+          <Button as={'a'} fontSize={'sm'} fontWeight={400} variant={'link'} href={'#'} color='white'>
             Sign In
           </Button>
           <Button
@@ -76,7 +81,7 @@ export default function WithSubnavigation() {
             fontSize={'sm'}
             fontWeight={600}
             color={'white'}
-            bg={'pink.400'}
+            bg={'#16425B'}
             href={'#'}
             _hover={{
               bg: 'pink.300',
@@ -86,7 +91,7 @@ export default function WithSubnavigation() {
         </Stack>
       </Flex>
 
-      <Collapse in={isOpen} animateOpacity>
+      <Collapse in={isOpen}  animateOpacity>
         <MobileNav />
       </Collapse>
     </Box>
@@ -94,8 +99,8 @@ export default function WithSubnavigation() {
 }
 
 const DesktopNav = () => {
-  const linkColor = useColorModeValue('gray.600', 'gray.200')
-  const linkHoverColor = useColorModeValue('gray.800', 'white')
+  const linkColor = "white"
+  const linkHoverColor = "blue.300"
   const popoverContentBgColor = useColorModeValue('white', 'gray.800')
 
   return (
@@ -178,7 +183,7 @@ const DesktopSubNav = ({ label, href, subLabel }: NavItem) => {
 
 const MobileNav = () => {
   return (
-    <Stack bg={useColorModeValue('white', 'gray.800')} p={4} display={{ md: 'none' }}>
+    <Stack bg="#16425B" p={4} display={{ md: 'none' }}>
       {NAV_ITEMS.map((navItem) => (
         <MobileNavItem key={navItem.label} {...navItem} />
       ))}
@@ -190,7 +195,7 @@ const MobileNavItem = ({ label, children, href }: NavItem) => {
   const { isOpen, onToggle } = useDisclosure()
 
   return (
-    <Stack spacing={4} onClick={children && onToggle}>
+    <Stack spacing={4} onClick={children && onToggle} color="white">
       <Box
         py={2}
         as="a"
@@ -200,7 +205,7 @@ const MobileNavItem = ({ label, children, href }: NavItem) => {
         _hover={{
           textDecoration: 'none',
         }}>
-        <Text fontWeight={600} color={useColorModeValue('gray.600', 'gray.200')}>
+        <Text fontWeight={600}>
           {label}
         </Text>
         {children && (
