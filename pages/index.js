@@ -1,255 +1,247 @@
-import { Heading } from '@chakra-ui/react';
 import Head from 'next/head'
 import clientPromise from '../lib/mongodb'
-
-
+import NavBar from "../components/NavBar"
+import { Button, Center, Box, Image, Flex, Badge, Text, ButtonGroup, Heading, Container, SimpleGrid, HStack } from '@chakra-ui/react'
 
 export const getServerSideProps = async () => {
-  try {
-    await clientPromise
-    // `await clientPromise` will use the default database passed in the MONGODB_URI
-    // However you can use another database (e.g. myDatabase) by replacing the `await clientPromise` with the following code:
-    //
-    // `const client = await clientPromise`
-    // `const db = client.db("myDatabase")`
-    //
-    // Then you can execute queries against your database like so:
-    // db.find({}) or any of the MongoDB Node Driver commands
-
-    return {
-      props: { isConnected: true },
-    }
-  } catch (e) {
-    console.error(e)
-    return {
-      props: { isConnected: false },
+    try {
+      await clientPromise
+      return {
+        props: { isConnected: true },
+      }
+    } catch (e) {
+      console.error(e)
+      return {
+        props: { isConnected: false },
+      }
     }
   }
-}
-
+  
 export default function Home({
-  isConnected,
-}) {
-  return (
+    isConnected,
+  }) {
+return (
     <div className="container">
       <Head>
-        <title>Create Next App</title>
+        <title>GT Club Explorer Landing Page</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main>
+      <NavBar />
+
+      <Container maxW='container.lg' mx="auto" spacing={16}>
+
+        <SimpleGrid columns={{base: 1, lg: 2}} alignItems='center' mt={8} textAlign={{base: "center", lg: "left"}}>
+          <Box>
+            <Heading fontSize={{base: '5xl', lg: '7xl'}} fontWeight='extrabold'>Georgia Tech <br/> <Text as='span' color='#16425B'>Club Explorer</Text></Heading>
+
+            <HStack justify={{base: "center", lg: "flex-start"}}>
+              <Button border='2px' bg='#16425B' color="white" mt={4} mb={4}
+              _hover={{
+                borderColor:"yellow.500",
+                textColor: "yellow.500",
+                background: "white",
+                textColor: "black",
+              }}>Explore Clubs</Button>
+
+              <Button bg="" textColor="#16425B"  mt={4} mb={4}
+              _hover={{
+                borderColor:"yellow.500",
+                textColor: "yellow.500",
+                background: "white",
+                textColor: "black",
+              }}>How It Works</Button>
+            </HStack>
+          </Box>
+
+          <Image mx="auto" display={{base: "none", lg: "block"}} src="/img/Georgia-Tech-Yellow-Jackets-Logo.png" maxH='250px' />
+
+        </SimpleGrid>
+
+        {/* TODO:
+            - how it works section
+            - instead of using "Flex" for the section below, use "SimpleGrid"
         
-        <h1 className="title">
-          Welcome to <a href="https://nextjs.org">Next.js with MongoDB!</a>
-        </h1>
+        */}
+        
 
-        {isConnected ? (
-          <h2 className="subtitle">You are connected to MongoDB</h2>
-        ) : (
-          <h2 className="subtitle">
-            You are NOT connected to MongoDB. Check the <code>README.md</code>{' '}
-            for instructions.
-          </h2>
-        )}
-
-        <p className="description">
-          Get started by editing <code>pages/index.js</code>
-        </p>
-
-        <div className="grid">
-          <a href="https://nextjs.org/docs" className="card">
-            <h3>Documentation &rarr;</h3>
-            <p>Find in-depth information about Next.js features and API.</p>
-          </a>
-
-          <a href="https://nextjs.org/learn" className="card">
-            <h3>Learn &rarr;</h3>
-            <p>Learn about Next.js in an interactive course with quizzes!</p>
-          </a>
-
-          <a
-            href="https://github.com/vercel/next.js/tree/canary/examples"
-            className="card"
-          >
-            <h3>Examples &rarr;</h3>
-            <p>Discover and deploy boilerplate example Next.js projects.</p>
-          </a>
-
-          <a
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="card"
-          >
-            <h3>Deploy &rarr;</h3>
-            <p>
-              Instantly deploy your Next.js site to a public URL with Vercel.
-            </p>
-          </a>
-        </div>
-        <Heading>If you're seeing this as bold, in big letters, then Chakra UI is working properly too.</Heading>
-      </main>
-
-      <footer>
-        <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
+        <Flex
+            justifyContent="center"
+            alignItems="center"
+            flexWrap="wrap"
+            paddingBottom={40}
         >
-          Powered by{' '}
-          <img src="/vercel.svg" alt="Vercel Logo" className="logo" />
-        </a>
-      </footer>
+          {Array.from({ length: 3 }).map((_, index) => (
+            <Box
+              key={index}
+              p="5"
+              maxW="320px"
+              mx={4}
+            >
+              <Center h="50vh" padding={1}>
+                <Box p="5" maxW="320px" borderWidth="3px">
+                  <Image borderRadius="md" src="https://www.wheeltest.com/cm/dpl/images/create/placeholder(1).jpg" />
+                  <Flex align="baseline" mt={2}>
+                    <Badge colorScheme="blue">Tags</Badge>
+                    <Text
+                      textTransform="uppercase"
+                      fontSize="sm"
+                      paddingLeft={2}
+                      color="yellow.600"
+                    >
+                      Cool &bull; Goofy
+                    </Text>
+                  </Flex>
+                  <Text mt={2} fontSize="xl" fontWeight="semibold" lineHeight="short">
+                    Random Club
+                  </Text>
+                  <Text mt={2}>Description: yoooooooooooooooo waddup</Text>
+                </Box>
+              </Center>
+            </Box>
+          ))}
+        </Flex>
+      </Container>
+
+      {/* <main>
+        <NavBar></NavBar>
+        <h1 className="title">
+          Georgia Tech<br></br>
+          Club Explorer
+        </h1>
+        <div>
+          <Button size='lg' height='64px' width='300px' border='2px' color="yellow.500" textColor="white" background="yellow.500" fontSize={32} mt={4} mb={4} ml={4} mr={4}
+          _hover={{
+            borderColor:"yellow.500",
+            textColor: "yellow.500",
+            background: "white",
+            textColor: "black",
+          }}>Explore Clubs</Button>
+
+          <Button size='lg' height='64px' width='300px' border='2px' color="yellow.500" textColor="white" background="yellow.500" fontSize={32} mt={4} mb={4} ml={4} mr={4}
+          _hover={{
+            borderColor:"yellow.500",
+            textColor: "yellow.500",
+            background: "white",
+            textColor: "black",
+          }}>How It Works</Button>
+          <img className="landingImage" width="400" height="400" src="/img/Georgia-Tech-Yellow-Jackets-Logo.png" />
+        </div>
+        <h2 className="secondaryTitle">
+          How It Works
+        </h2>
+        <p className='paragraph'>
+          This is how it works! Idk yet so this is just dummy text. 
+          I am going to smash my keyboard to test whether the text centers properly on the site with multiple sentences.<br></br><br></br> 
+          asfdhjkasdhkjfjahksdlhjkldafshjkldfsahjasdfhjkladfshjkljklahsdhbfasjivbnasljkegbfljksdhfaoisuwbfcdljsiahrgjlsadbfouaeuibcvhljdsadbgf
+          osiadjbvlasjdhfsudlivblsuaecdbsvlusagheladvbaslufhblasjkdbvlaseuibvljsbvliasdj ;-P
+        </p>
+        <div>
+        <Flex
+            justifyContent="center"
+            alignItems="center"
+            flexWrap="wrap"
+            paddingBottom={40}
+        >
+          {Array.from({ length: 3 }).map((_, index) => (
+            <Box
+              key={index}
+              p="5"
+              maxW="320px"
+              mx={4}
+            >
+              <Center h="50vh" padding={1}>
+                <Box p="5" maxW="320px" borderWidth="3px">
+                  <Image borderRadius="md" src="https://www.wheeltest.com/cm/dpl/images/create/placeholder(1).jpg" />
+                  <Flex align="baseline" mt={2}>
+                    <Badge colorScheme="blue">Tags</Badge>
+                    <Text
+                      textTransform="uppercase"
+                      fontSize="sm"
+                      paddingLeft={2}
+                      color="yellow.600"
+                    >
+                      Cool &bull; Goofy
+                    </Text>
+                  </Flex>
+                  <Text mt={2} fontSize="xl" fontWeight="semibold" lineHeight="short">
+                    Random Club
+                  </Text>
+                  <Text mt={2}>Description: yoooooooooooooooo waddup</Text>
+                </Box>
+              </Center>
+            </Box>
+          ))}
+        </Flex>
+        </div>
+        <p className="copyrightContainer">
+          Copyright 2023 - GT Web Dev
+        </p>
+      </main> */}
 
       <style jsx>{`
-        .container {
-          min-height: 100vh;
-          padding: 0 0.5rem;
-          display: flex;
-          flex-direction: column;
-          justify-content: center;
-          align-items: center;
-        }
-
-        main {
-          padding: 5rem 0;
-          flex: 1;
-          display: flex;
-          flex-direction: column;
-          justify-content: center;
-          align-items: center;
-        }
-
-        footer {
-          width: 100%;
-          height: 100px;
-          border-top: 1px solid #eaeaea;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-        }
-
-        footer img {
-          margin-left: 0.5rem;
-        }
-
-        footer a {
-          display: flex;
-          justify-content: center;
-          align-items: center;
-        }
-
-        a {
-          color: inherit;
-          text-decoration: none;
-        }
-
-        .title a {
-          color: #0070f3;
-          text-decoration: none;
-        }
-
-        .title a:hover,
-        .title a:focus,
-        .title a:active {
-          text-decoration: underline;
-        }
-
         .title {
-          margin: 0;
-          line-height: 1.15;
-          font-size: 4rem;
-        }
-
-        .title,
-        .description {
-          text-align: center;
-        }
-
-        .subtitle {
-          font-size: 2rem;
-        }
-
-        .description {
-          line-height: 1.5;
-          font-size: 1.5rem;
-        }
-
-        code {
-          background: #fafafa;
-          border-radius: 5px;
-          padding: 0.75rem;
-          font-size: 1.1rem;
-          font-family: Menlo, Monaco, Lucida Console, Liberation Mono,
-            DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace;
-        }
-
-        .grid {
+          font-size: 80px;
           display: flex;
           align-items: center;
-          justify-content: center;
-          flex-wrap: wrap;
-
-          max-width: 800px;
-          margin-top: 3rem;
-        }
-
-        .card {
-          margin: 1rem;
-          flex-basis: 45%;
-          padding: 1.5rem;
-          text-align: left;
-          color: inherit;
-          text-decoration: none;
-          border: 1px solid #eaeaea;
-          border-radius: 10px;
-          transition: color 0.15s ease, border-color 0.15s ease;
-        }
-
-        .card:hover,
-        .card:focus,
-        .card:active {
-          color: #0070f3;
-          border-color: #0070f3;
-        }
-
-        .card h3 {
-          margin: 0 0 1rem 0;
-          font-size: 1.5rem;
-        }
-
-        .card p {
+          color: darkblue;
+          font-family: "din-2014",sans-serif;
+          font-weight: 600;
+          font-style: normal;
           margin: 0;
-          font-size: 1.25rem;
-          line-height: 1.5;
-        }
-
-        .logo {
-          height: 1em;
-        }
-
-        @media (max-width: 600px) {
-          .grid {
-            width: 100%;
-            flex-direction: column;
+          text-transform: uppercase;
+          margin-top: 20px;
+          margin-bottom: 20px;
           }
+        .secondaryTitle {
+            font-size: 50px;
+            color: #C29B0C;
+            font-family: "din-2014",sans-serif;
+            font-weight: 600;
+            font-style: normal;
+            text-transform: uppercase;
+            margin-top: 200px;
+            margin-bottom: 40px;
+            text-align: center;
+          }
+        .paragraph{
+          font-size: 20px;
+          color: darkblue;
+          font-family: "din-2014",sans-serif;
+          font-weight: 600;
+          font-style: normal;
+          margin-bottom: 40px;
+          text-align: center;
+          margin: 0 auto;
+          padding: 20px; /* Optional padding for spacing */
+          text-align: center; /* Center the text within the container */
+          margin: 0 auto; /* Center the container horizontally */
+          max-width: 700px;
+          padding-bottom:40px;
         }
-      `}</style>
-
-      <style jsx global>{`
-        html,
-        body {
-          padding: 0;
-          margin: 0;
-          font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto,
-            Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue,
-            sans-serif;
+        .landingImage{
+          position: absolute;
+          top: 0;
+          right: 0;
         }
-
-        * {
+        .copyrightContainer {
+          font-size:2 0px;
           box-sizing: border-box;
+          padding-right: 20px;
+          padding-left: 20px;
+          background-color: black;
+          text-align: center;
+          position: absolute;
+          bottom: 0;
+          width: 100%;
+          height: 30px;
+          color: white;
         }
-      `}</style>
+`     }</style>
+      {/*<style jsx global>{
+
+      }</style> */}
+
     </div>
-  )
-}
+    )
+  }
