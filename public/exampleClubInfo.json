@@ -1,0 +1,51 @@
+{
+    "_id": {
+        "$oid": "651a64fdfe0cdfb1fff138cc"
+    },
+    "name": "GT Lorem Ipsum Club",
+    "slug": "gt-lorem-ipsum-club",
+    "tags": [
+        "cultural",
+        "fun",
+        "career",
+        "mechanical engineering"
+    ],
+    "media": {
+        "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/bf/Georgia_Tech_Yellow_Jackets_logo.svg/1280px-Georgia_Tech_Yellow_Jackets_logo.svg.png",
+        "banner": "https://i.ibb.co/4mPTXkb/Untitled-design-2023-09-26-T192909-018-21.png",
+        "video": "https://www.youtube.com/watch?v=b3KCZ0LQ3nY",
+        "images": [
+            "https://www.tun.com/blog/wp-content/uploads/2021/04/36-Popular-High-School-Clubs-To-Explore.jpg",
+            "https://7541184.fs1.hubspotusercontent-na1.net/hubfs/7541184/after-school-club-ideas.jpg",
+            "https://peabody.k12.ma.us/wp-content/uploads/2022/04/McCarthyDonate.jpg",
+            "https://media.istockphoto.com/id/486420378/photo/head-is-swimming-on-dance-floor.jpg?s=612x612&w=0&k=20&c=EiMJlGkIDN5aPdr8-QHzAIU6R8Siago92eisJZCNqts="
+        ]
+    },
+    "links": {
+        "insta": "https://instagram.com/gatech",
+        "website": "https://gatech.edu",
+        "facebook": "https://facebook.com",
+        "email": "ganning.xu@gatech.edu"
+    },
+    "meetingTimes": "Mondays & Fridays",
+    "numMembers": "20-50",
+    "appType": "None",
+    "lastUpdated": "Tue Mar 24 2015 20:00:00 GMT-0400",
+    "commitmentTime": "3 hours",
+    "shortDesc": "Our purpose is to strive to understand the ways of Lorem Ipsum, a famous Roman philosopher known for pioneering the world of modern UI/UX design by writing gibberish everywhere where actual words weren’t needed.",
+    "longDesc": "# h1 Heading 8-)\n## h2 Heading\n### h3 Heading\n#### h4 Heading\n##### h5 Heading\n###### h6 Heading\n\n\n## Horizontal Rules\n\n***\n\n\n## Typographic replacements\n\nEnable typographer option to see result.\n\n(c) (C) (r) (R) (tm) (TM) (p) (P) +-\n\ntest.. test... test..... test?..... test!....\n\n!!!!!! ???? ,,  -- ---\n\n\"Smartypants, double quotes\" and 'single quotes'\n\n\n## Emphasis\n\n**This is bold text**\n\n__This is bold text__\n\n*This is italic text*\n\n_This is italic text_\n\n~~Strikethrough~~\n\n\n\nBlock code \"fences\"\n\n## Blockquotes\n\n\n> Blockquotes can also be nested...\n>> ...by using additional greater-than signs right next to each other...\n> > > ...or with \"spaces\" between 'arrows'.\n\n\n## Lists\n\nUnordered\n\n",
+    "faq": [
+        {
+            "question": "What do most people like about Lorem Ipsum Club?",
+            "answer": "Ipsum Workshops: Hands-on training sessions that teach the skill of incorporating 'Lorem Ipsum' into various design mediums, be it websites, apps, or print."
+        },
+        {
+            "question": "What do most people like about Lorem Ipsum Club?",
+            "answer": "Ipsum Workshops: Hands-on training sessions that teach the skill of incorporating 'Lorem Ipsum' into various design mediums, be it websites, apps, or print."
+        },
+        {
+            "question": "What do most people like about Lorem Ipsum Club?",
+            "answer": "Ipsum Workshops: Hands-on training sessions that teach the skill of incorporating 'Lorem Ipsum' into various design mediums, be it websites, apps, or print."
+        }
+    ]
+}
