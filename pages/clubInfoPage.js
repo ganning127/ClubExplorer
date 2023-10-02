@@ -2,7 +2,7 @@ import Head from 'next/head'
 import clientPromise from '../lib/mongodb'
 import PhotoSlider from "../components/photoslider.js";
 {/* import NavBar from "../components/NavBar"*/}
-import { Button, Center, Box, Image, Flex, Badge, Text, ButtonGroup, Heading, Container, SimpleGrid, HStack } from '@chakra-ui/react'
+import { Button, Center, Box, Image, Flex, Badge, Text, ButtonGroup, Heading, Container, SimpleGrid, HStack, Avatar } from '@chakra-ui/react'
 const photos = ['photo1.jpg', 'photo2.jpg', 'photo3.jpg', 'photo4.jpg', 'photo5.jpg'];
 export const getServerSideProps = async () => {
     try {
@@ -28,10 +28,36 @@ return (
       </Head>
 
       {/* <NavBar />*/}
-      <Image mx="auto" display={{base: "none", lg: "block"}} src="/img/loremIpsum.png" maxH='250px' />
-      <Container maxW='container.lg' mx="auto" spacing={16}>
-        <Image mx="auto" display={{base: "none", lg: "block"}} src="/img/lorem-ipsum-circle-icon.png" maxH='250px' />
-        <Heading fontSize={{base: '5xl', lg: '7xl'}} fontWeight='extrabold'>Georgia Tech Lorem Ipsum Association</Heading>
+      <Box
+        display="flex"
+        justifyContent="center"
+        alignItems="center"
+        marginBottom="40px"
+      >
+        <Image
+          src="/img/loremIpsum.png"
+          width="100%"
+          height="100px"
+          objectFit="cover"
+        />
+      </Box>
+      <Container maxW='container.xl' mx="auto" spacing={16} marginBottom="40px">
+        <Flex alignItems="center">
+          <Avatar
+            size="2xl"
+            mx="auto"
+            display={{ base: "none", lg: "block" }}
+            borderRadius='full'
+            src="/img/LoremIpsumAboutPhoto.PNG"
+            marginRight="40px"
+          />
+          <Heading
+            fontSize={{ base: '5xl', lg: '7xl' }}
+            fontWeight='extrabold'
+          >
+            Georgia Tech Lorem Ipsum Association
+          </Heading>
+        </Flex>
       </Container>
       <Container maxW='container.lg' mx="auto" spacing={16}>
         <Box backgroundColor= 'purple.100'
