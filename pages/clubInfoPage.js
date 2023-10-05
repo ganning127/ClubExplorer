@@ -4,6 +4,10 @@ import PhotoSlider from "../components/photoslider.js";
 {/* import NavBar from "../components/NavBar"*/}
 import { Button, Center, Box, Image, Flex, Badge, Text, ButtonGroup, Heading, Container, SimpleGrid, HStack, Avatar } from '@chakra-ui/react'
 import { Swiper, SwiperSlide } from 'swiper/react'
+
+import 'swiper/css';
+
+const photos = ['/img/testingImageScroller1.jpg', '/img/testingImageScroller2.jpg', '/img/testingImageScroller3.jpg', '/img/testingImageScroller4.jpg', '/img/testingImageScroller5.jpg'];
 export const getServerSideProps = async () => {
     try {
       await clientPromise
@@ -129,7 +133,21 @@ return (
         Feel free to reach out if you're keen on joining a club that believes in the power of nonsense to make perfect sense!</Text>
       </Container>
       
-      <PhotoSlider />
+      {/*<PhotoSlider />*/}
+      <Swiper
+      spaceBetween={50}
+      slidesPerView={3}
+      navigation
+      pagination={{ clickable: true }}
+      onSlideChange={() => console.log('slide change')}
+      >
+        {photos.map((photo, index) => (
+        <SwiperSlide key={index}>
+          <Image src={photo} alt={`Photo ${index + 1}`} width={300} height={200} />
+        </SwiperSlide>
+      ))}
+        ...
+      </Swiper>
 
       <Flex
       backgroundColor="black"
