@@ -3,7 +3,7 @@ import clientPromise from '../lib/mongodb'
 import PhotoSlider from "../components/photoslider.js";
 {/* import NavBar from "../components/NavBar"*/}
 import { Button, Center, Box, Image, Flex, Badge, Text, ButtonGroup, Heading, Container, SimpleGrid, HStack, Avatar } from '@chakra-ui/react'
-const photos = ['photo1.jpg', 'photo2.jpg', 'photo3.jpg', 'photo4.jpg', 'photo5.jpg'];
+import { Swiper, SwiperSlide } from 'swiper/react'
 export const getServerSideProps = async () => {
     try {
       await clientPromise
@@ -48,7 +48,7 @@ return (
             mx="auto"
             display={{ base: "none", lg: "block" }}
             borderRadius='full'
-            src="/img/LoremIpsumAboutPhoto.PNG"
+            src="\img\lorem-ipsum-circle-icon.png"
             marginRight="40px"
           />
           <Heading
