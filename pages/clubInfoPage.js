@@ -1,11 +1,15 @@
 import Head from 'next/head'
 import clientPromise from '../lib/mongodb'
 import PhotoSlider from "../components/photoslider.js";
-{/* import NavBar from "../components/NavBar"*/}
+import NavBar from "../components/NavBar"
 import { Button, Center, Box, Image, Flex, Badge, Text, ButtonGroup, Heading, Container, SimpleGrid, HStack, Avatar } from '@chakra-ui/react'
 import { Swiper, SwiperSlide } from 'swiper/react'
 
 import 'swiper/css';
+import 'swiper/css/pagination';
+import 'swiper/css/effect-coverflow';
+
+import { EffectCoverflow, Pagination } from 'swiper/modules';
 
 const photos = ['/img/testingImageScroller1.jpg', '/img/testingImageScroller2.jpg', '/img/testingImageScroller3.jpg', '/img/testingImageScroller4.jpg', '/img/testingImageScroller5.jpg'];
 export const getServerSideProps = async () => {
@@ -31,7 +35,7 @@ return (
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      {/* <NavBar />*/}
+      <NavBar />
       <Box
         display="flex"
         justifyContent="center"
@@ -64,43 +68,11 @@ return (
         </Flex>
       </Container>
       <Container maxW='container.lg' mx="auto" spacing={16}>
-        <Box backgroundColor= 'purple.100'
-          padding= '10px'
-          borderRadius= '20px'
-          display= 'inline-block'
-          margin= '5px'>
-          <Text textColor= 'purple'>Cultural</Text>
-        </Box>
-
-        <Box backgroundColor= 'blue.100'
-          padding= '10px'
-          borderRadius= '20px'
-          display= 'inline-block'
-          margin= '5px'>
-          <Text textColor= 'blue'>Entertainment</Text>
-        </Box>
-
-        <Box backgroundColor= 'red.100'
-          padding= '10px'
-          borderRadius= '20px'
-          display= 'inline-block'
-          margin= '5px'>
-          <Text textColor= 'red.600'>Career</Text>
-        </Box>
-        <Box backgroundColor= 'green.100'
-          padding= '10px'
-          borderRadius= '20px'
-          display= 'inline-block'
-          margin= '5px'>
-          <Text textColor= 'green'>Mechanical Engineering</Text>
-        </Box>
-        <Box backgroundColor= 'yellow.100'
-          padding= '10px'
-          borderRadius= '20px'
-          display= 'inline-block'
-          margin= '5px'>
-          <Text textColor= 'yellow.600'>Spahgetti Enthusiasts</Text>
-        </Box>
+        <Badge ml='2' fontSize='md' colorScheme='green'>Cultural</Badge>
+        <Badge ml='2' fontSize='md' colorScheme='blue'>Entertainment</Badge>
+        <Badge ml='2' fontSize='md' colorScheme='red'>Career</Badge>
+        <Badge ml='2' fontSize='md' colorScheme='purple'>Mechanical Engineering</Badge>
+        <Badge ml='2' fontSize='md' colorScheme='yellow'>Spaghetti Enthusiasts</Badge>
       </Container>
 
       <Container maxW='container.lg' mx="auto" spacing={16} marginBottom="20px" marginTop="20px">
@@ -134,21 +106,45 @@ return (
       </Container>
       
       {/*<PhotoSlider />*/}
-      <Swiper
+      {/* <Swiper
       spaceBetween={50}
       slidesPerView={3}
-      navigation
+      navigation={{ nextEl: '.swiper-button-next', prevEl: '.swiper-button-prev' }}
       pagination={{ clickable: true }}
       onSlideChange={() => console.log('slide change')}
+      style={{ margin: '0 50px' }}
       >
         {photos.map((photo, index) => (
-        <SwiperSlide key={index}>
-          <Image src={photo} alt={`Photo ${index + 1}`} width={300} height={200} />
-        </SwiperSlide>
-      ))}
-        ...
-      </Swiper>
-
+          <SwiperSlide key={index}>
+            <Image src={photo} alt={`Photo ${index + 1}`} width={300} height={200} />
+          </SwiperSlide>
+        ))}
+      </Swiper> */}
+      <Container maxW='container.lg' mx="auto" spacing={16} marginTop="20px" marginBottom="100px">
+        <Swiper
+          effect={'coverflow'}
+          grabCursor={true}
+          slidesPerView={'auto'}
+          backgroundSize={'cover'}
+          backgroundPosition={'center'}
+          coverflowEffect={{
+            rotate: 0,
+            stretch: 0,
+            depth: 0,
+            modifier: 0,
+            slideShadows: true,
+            center: true,
+          }}
+          pagination={true}
+          modules={[EffectCoverflow, Pagination]}
+        >
+          {photos.map((photo, index) => (
+            <SwiperSlide key={index}>
+              <Image src={photo} alt={`Photo ${index + 1}`} width={300} height={200} />
+            </SwiperSlide>
+          ))}
+        </Swiper>
+      </Container>
       <Flex
       backgroundColor="black"
       color="white"
