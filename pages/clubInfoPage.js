@@ -4,6 +4,7 @@ import PhotoSlider from "../components/photoslider.js";
 import NavBar from "../components/NavBar"
 import { Button, Center, Box, Image, Flex, Badge, Text, ButtonGroup, Heading, Container, SimpleGrid, HStack, Avatar } from '@chakra-ui/react'
 import { Swiper, SwiperSlide } from 'swiper/react'
+import MDEditor from '@uiw/react-md-editor';
 
 import 'swiper/css';
 import 'swiper/css/pagination';
@@ -12,6 +13,8 @@ import 'swiper/css/effect-coverflow';
 import { EffectCoverflow, Pagination } from 'swiper/modules';
 
 const photos = ['/img/testingImageScroller1.jpg', '/img/testingImageScroller2.jpg', '/img/testingImageScroller3.jpg', '/img/testingImageScroller4.jpg', '/img/testingImageScroller5.jpg'];
+const [value, setValue] = React.useState("**Hello world!!!**");
+
 export const getServerSideProps = async () => {
     try {
       await clientPromise
@@ -76,8 +79,18 @@ return (
       </Container>
 
       <Container maxW='container.lg' mx="auto" spacing={16} marginBottom="20px" marginTop="20px">
-        <Heading fontSize={{base: '3xl', lg: '5xl'}} fontWeight='extrabold'>About Us</Heading>
-        <Text>Welcome to the Lorem Ipsum Association—your gateway to enlightenment through gibberish! We're a collective of passionate individuals captivated by the awe-inspiring ways of Lorem Ipsum, a Roman philosopher who was centuries ahead of his time. Contrary to popular belief, Lorem Ipsum did not just fill in the blanks of history; he defined a revolutionary outlook on the visual design landscape.</Text>
+
+        <MDEditor 
+          value={value}
+          onChange={setValue}
+        />
+        <MDEditor.Markdown source={value} style={{ whiteSpace: 'pre-wrap' }} />
+
+        {/* <Heading fontSize={{base: '3xl', lg: '5xl'}} fontWeight='extrabold'>About Us</Heading>
+        <Text>Welcome to the Lorem Ipsum Association—your gateway to enlightenment through gibberish! 
+          We're a collective of passionate individuals captivated by the awe-inspiring ways of Lorem Ipsum, 
+          a Roman philosopher who was centuries ahead of his time. Contrary to popular belief, Lorem Ipsum did not just fill in the blanks 
+          of history; he defined a revolutionary outlook on the visual design landscape.</Text>     */}    
       </Container>
       <Image mx="auto" display={{base: "none", lg: "block"}} src="/img/LoremIpsumAboutPhoto.PNG" maxH='250px' />
 
