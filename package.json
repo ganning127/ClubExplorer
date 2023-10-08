@@ -11,6 +11,7 @@
     "@chakra-ui/react": "^2.8.1",
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
+    "@uiw/react-md-editor": "^3.23.6",
     "framer-motion": "^10.16.4",
     "mongodb": "^4.8.1",
     "next": "latest",
