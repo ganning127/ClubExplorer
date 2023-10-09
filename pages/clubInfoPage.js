@@ -4,16 +4,40 @@ import PhotoSlider from "../components/photoslider.js";
 import NavBar from "../components/NavBar"
 import { Button, Center, Box, Image, Flex, Badge, Text, ButtonGroup, Heading, Container, SimpleGrid, HStack, Avatar } from '@chakra-ui/react'
 import { Swiper, SwiperSlide } from 'swiper/react'
-import MDEditor from '@uiw/react-md-editor';
-
+import React, { useContext } from "react";
+import dynamic from 'next/dynamic';
+import mdsource from 'next-remove-imports/README.md';
+import "@uiw/react-markdown-preview/markdown.css";
+import "@uiw/react-md-editor/markdown-editor.css";
 import 'swiper/css';
 import 'swiper/css/pagination';
 import 'swiper/css/effect-coverflow';
 
+import styles from './markdown.module.css';
+
 import { EffectCoverflow, Pagination } from 'swiper/modules';
+
+import { MarkdownPreviewProps } from "@uiw/react-markdown-preview";
 
 const photos = ['/img/testingImageScroller1.jpg', '/img/testingImageScroller2.jpg', '/img/testingImageScroller3.jpg', '/img/testingImageScroller4.jpg', '/img/testingImageScroller5.jpg'];
 const [value, setValue] = React.useState("**Hello world!!!**");
+
+const GitHubCorners = dynamic(
+  () => import("@uiw/react-github-corners").then((mod) => mod.default),
+  { ssr: false }
+);
+
+const MDEditor = dynamic(
+  () => import("@uiw/react-md-editor").then((mod) => mod.default),
+  { ssr: false }
+);
+
+const MarkdownPreview = dynamic(
+  () => import("@uiw/react-markdown-preview").then((mod) => mod.default),
+  { ssr: false }
+);
+
+
 
 export const getServerSideProps = async () => {
     try {
@@ -134,29 +158,7 @@ return (
         ))}
       </Swiper> */}
       <Container maxW='container.lg' mx="auto" spacing={16} marginTop="20px" marginBottom="100px">
-        <Swiper
-          effect={'coverflow'}
-          grabCursor={true}
-          slidesPerView={'auto'}
-          backgroundSize={'cover'}
-          backgroundPosition={'center'}
-          coverflowEffect={{
-            rotate: 0,
-            stretch: 0,
-            depth: 0,
-            modifier: 0,
-            slideShadows: true,
-            center: true,
-          }}
-          pagination={true}
-          modules={[EffectCoverflow, Pagination]}
-        >
-          {photos.map((photo, index) => (
-            <SwiperSlide key={index}>
-              <Image src={photo} alt={`Photo ${index + 1}`} width={300} height={200} />
-            </SwiperSlide>
-          ))}
-        </Swiper>
+        <PhotoSlider />
       </Container>
       <Flex
       backgroundColor="black"
