@@ -1,4 +1,5 @@
 // pages/_app.js
+import '@uiw/react-markdown-preview/esm/styles/markdown.css';
 import { ChakraProvider } from '@chakra-ui/react'
 import { useColorMode } from "@chakra-ui/react";
 import { useEffect } from "react";
@@ -6,7 +7,6 @@ import { useEffect } from "react";
 function ForceLightMode({ children }) {
   // force light mode b/c of ChakraUI bug
   const { colorMode, toggleColorMode } = useColorMode();
-
   useEffect(() => {
     if (colorMode === "light") return;
     toggleColorMode();
