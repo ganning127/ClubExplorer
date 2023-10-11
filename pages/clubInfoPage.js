@@ -142,7 +142,7 @@ return (
         Feel free to reach out if you're keen on joining a club that believes in the power of nonsense to make perfect sense!</Text>
       </Container>
       
-      {/*<PhotoSlider />*/}
+      <PhotoSlider />
       {/* <Swiper
       spaceBetween={50}
       slidesPerView={3}
