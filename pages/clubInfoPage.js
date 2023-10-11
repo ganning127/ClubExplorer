@@ -132,6 +132,14 @@ export default function Home({
           Feel free to reach out if you're keen on joining a club that believes in the power of nonsense to make perfect sense!</Text>
       </Container>
 
+
+      <MDEditor
+        value={value}
+        data-color-mode="light"
+        preview="preview"
+        height="80vh"
+      />
+
       {/*<PhotoSlider />*/}
       {/* <Swiper
       spaceBetween={50}
@@ -164,12 +172,6 @@ export default function Home({
         <Text>Copyright 2023 - GT Web Dev</Text>
       </Flex>
 
-      <MDEditor
-        value={value}
-        data-color-mode="light"
-        preview="preview"
-        height="80vh"
-      />
     </div>
   );
 }
