@@ -3,11 +3,13 @@ import { useState } from "react";
 
 const Filters = () => {
     
-    const [checkedValues, setCheckedValues] = useState([]);
+    const [membershipCheckedValues, setMembershipCheckedValues] = useState([]);
+    const [applicationCheckedValues, setApplicationCheckedValues] = useState([]);
+    const [focusCheckedValues, setFocusCheckedValues] = useState([]);
 
-    const handleCheckboxChange = (values) => {
-        setCheckedValues(values);
-    }; 
+    const handleMembershipCheckedChange = (values) => { setMembershipCheckedValues(values); } 
+    const handleApplicationCheckedChange = (values) => { setApplicationCheckedValues(values); } 
+    const handleFocusCheckedChange = (values) => { setFocusCheckedValues(values); } 
 
   return (
     <>
@@ -17,7 +19,7 @@ const Filters = () => {
         <Box p={4} borderWidth={1} borderRadius="md">
             <Heading size="sm" mb={2}>By Membership:</Heading>
             <VStack align="start" spacing={0}>
-                <CheckboxGroup value={checkedValues} onChange={handleCheckboxChange}>
+                <CheckboxGroup value={membershipCheckedValues} onChange={handleMembershipCheckedChange}>
                 <Checkbox value="small">1-20 members</Checkbox>
                 <Checkbox value="medium">20-50 members</Checkbox>
                 <Checkbox value="large">50+ members</Checkbox>
@@ -29,7 +31,7 @@ const Filters = () => {
         <Box p={4} borderWidth={1} borderRadius="md">
             <Heading size="sm" mb={2}>By Application:</Heading>
             <VStack align="start" spacing={0}>
-                <CheckboxGroup value={checkedValues} onChange={handleCheckboxChange}>
+                <CheckboxGroup value={applicationCheckedValues} onChange={handleApplicationCheckedChange}>
                     <Checkbox value="no">No application</Checkbox>
                     <Checkbox value="yes">Application required</Checkbox>
                 </CheckboxGroup>
@@ -40,7 +42,7 @@ const Filters = () => {
         <Box p={4} borderWidth={1} borderRadius="md">
             <Heading size="sm" mb={2}>By Focus:</Heading>
             <VStack align="start" spacing={0}>
-                <CheckboxGroup value={checkedValues} onChange={handleCheckboxChange}>
+                <CheckboxGroup value={focusCheckedValues} onChange={handleFocusCheckedChange}>
                     <Checkbox value="career">Career</Checkbox>
                     <Checkbox value="project-based">Project-based</Checkbox>
                     <Checkbox value="academic">Academic</Checkbox>
