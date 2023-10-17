@@ -1,14 +1,30 @@
-import { Box } from "@chakra-ui/react";
+import { Box, Link, Heading, HStack, Badge, Text } from "@chakra-ui/react";
 
 
-export default function ExploreCard() {
+export default function ExploreCard({ club, index }) {
 
   return (
-    <Box>
-      <h2>Card Component</h2>
-      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut 
-        labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris 
-        nisi ut aliquip ex ea commodo consequat.</p>
-    </Box>
+    <Link href={`/club/${club.slug}`} _hover={{}} key={index}>
+        <Box p={4} shadow="xl" rounded="md" _hover={{
+            background: "gray.100",
+            transition: "all .2s"
+        }}>
+            <Heading fontSize="lg">
+                {club.name}
+            </Heading>
+
+            <HStack mt={2}> {
+                club.tags.map((tag, index) => {
+                    return (
+                        <Badge key={index} colorScheme="blue">{tag}</Badge>
+                    );
+                })
+            }</HStack>
+
+            <Text fontSize='md' mt={4}>
+                {club.shortDesc}
+            </Text>
+        </Box>
+    </Link>
   )
 }
