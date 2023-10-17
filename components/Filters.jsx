@@ -13,7 +13,7 @@ const Filters = () => {
 
   return (
     <>
-        <Heading size="md" mb={4}>Filter Results</Heading>
+        <Heading size="md" mb={0}>Filter Results</Heading>
 
         {/* Filter by membership */}
         <Box p={4} borderWidth={1} borderRadius="md">
@@ -52,7 +52,7 @@ const Filters = () => {
             </VStack>
         </Box>
 
-        {/* Filter by user-defined tags */}
+        {/* Filter by user-defined tags ? */}
         {/* ... */} 
     </>
 

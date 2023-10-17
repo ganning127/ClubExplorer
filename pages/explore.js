@@ -12,7 +12,6 @@ import Card from "../components/ExploreCard";
 {/* parameter `clubs` is an object containing the data for each club pulled from Mongo */} 
 export default function Explore({ success, clubs })
 {
-
     return (
         <>
             <Head>
@@ -22,40 +21,44 @@ export default function Explore({ success, clubs })
 
             <NavBar />
 
-            {/* <Container maxW='container.xl' mx="auto" > */}
-            <Flex>
+            {/* main page layout */} 
+            <Grid
+                columns={{ base: 1, md: 2, lg: 3, xl: 4 }} alignItems="center" mt={8} 
+                textAlign={{ base: "center", lg: "left" }} spacing={4} gridGap="40px"
+                w="90%" mx="auto" 
+            >
 
                 {/* Filters */}
-                <Box w="20%" p={4}>
+                <Box gridColumn="1" gridRow="2" alignSelf="start" borderWidth={2}>
                     <Filters />
                 </Box>
 
-
-                <Box w="80%" p={4}>
-
-                    {/* Search Bar */}
-                    <Box mb={4}>
-                        <Input placeholder="Search organizations" />
-                    </Box>
-
-
-                    {/* ExploreCards */} 
-                    <SimpleGrid columns={{ base: 1, md: 2, lg: 3 }} alignItems='center' mt={8} textAlign={{ base: "center", lg: "left" }} spacing={4}> {
-                        clubs.map((club, index) => {
-                            return (
-                                <Card club={club} index={index} />
-                            );
-                        })
-                    }</SimpleGrid>
+                    
+                {/* Search Bar */}
+                <Box gridColumn={{ base: 1, md: 2 }} gridRow="1">
+                    <Input placeholder="Search organizations" />
                 </Box>
 
-            </Flex>
 
+                {/* ExploreCards */} 
+                <SimpleGrid 
+                    gridColumn={{ base: 1, md: 2 }} gridRow={{ base: 3, md: 2 }} 
+                    columns={{ base: 1, lg: 2, xl: 3 }} alignItems="center"
+                    textAlign={{ base: "center", lg: "left" }} spacing={4} 
+                    
+                >{
+                    clubs.map((club, index) => {
+                        return <Card club={club} index={index} />
+                    })
+                }</SimpleGrid>
 
-            {/* </Container> */}
+            </Grid>
+
         </>
     );
 }
+
+
 
 export async function getServerSideProps(context)
 {
