@@ -13,6 +13,8 @@ export default function ExploreCard({ club, index }) {
                 {club.name}
             </Heading>
 
+            <Text>{club._id}</Text>  {/* temporary, to distinguish cards since they all have same data */} 
+
             <HStack mt={2}> {
                 club.tags.map((tag, index) => {
                     return (
