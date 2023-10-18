@@ -15,7 +15,7 @@ export default function ExploreCard({ club, index }) {
 
             <Text>{club._id}</Text>  {/* temporary, to distinguish cards since they all have same data */} 
 
-            <HStack mt={2}> {
+            <HStack mt={2} flexWrap="wrap" justifyContent={{base: "center", lg: "left"}}> {
                 club.tags.map((tag, index) => {
                     return (
                         <Badge key={index} colorScheme="blue">{tag}</Badge>
