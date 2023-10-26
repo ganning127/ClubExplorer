@@ -23,7 +23,7 @@
     "**/*.ts",
     "**/*.tsx",
     "pages/NavBar.tsx"
-  ],
+, "middleware.js"  ],
   "exclude": [
     "node_modules"
   ]
