@@ -11,7 +11,7 @@ export default function ExploreCard({ club, index })
                 transition: "all .2s"
             }}>
 
-                <Img src={club.media.images[0]} rounded='md' />
+                {club.media.images && <Img src={club.media.images[0]} rounded='md' />}
                 <Heading fontSize="lg" mt={4}>
                     {club.name}
                 </Heading>
