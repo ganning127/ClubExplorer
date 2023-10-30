@@ -43,7 +43,7 @@ export default function Page({ club })
                 />
             </Box>
 
-            <Container maxW='container.xl' mx="auto" spacing={16}>
+            <Container maxW='container.xl' mx="auto" spacing={16} mb={16}>
                 <Flex alignItems="center">
                     <Avatar
                         size="2xl"
@@ -105,6 +105,21 @@ export default function Page({ club })
                     height="80vh"
                 />
             </Container>
+
+            <Flex
+                backgroundColor="black"
+                color="white"
+                textAlign="center"
+                justifyContent="center"
+                alignItems="center"
+                bottom="0"
+                width="100%"
+                height="30px"
+                paddingX="20px"
+                zIndex="9999">
+                <Text>Copyright 2023 - GT Web Dev</Text>
+            </Flex>
+
         </>
     );
 }
