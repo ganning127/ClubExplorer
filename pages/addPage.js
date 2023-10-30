@@ -361,11 +361,3 @@ export default function Home() {
     </>
   );
 }
-
-
-/* Things left to do:
-
-- Figure out how to include sections/descriptions for clubs.
-- Make error messages for all of the form inputs.
-- Make a submission page.
-*/
