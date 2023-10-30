@@ -1,42 +1,46 @@
 import Head from 'next/head';
 import NavBar from "../components/NavBar";
 import React, { useState, useEffect} from "react";
-import dynamic from 'next/dynamic';
+import { useRouter } from 'next/router';
 import {
-   InputGroup, InputRightAddon, FormControl, FormLabel, Switch, Slider, SliderTrack, SliderFilledTrack, SliderThumb, SliderMark, VStack, Input, Button, Center, Box, Image, Flex, Badge, Text, Textarea, ButtonGroup, Heading, Container, SimpleGrid, HStack, Avatar, Select, Tag, TagCloseButton, TagLabel 
+   InputGroup, InputRightAddon, FormControl, FormLabel, FormErrorMessage, Switch, Slider, SliderTrack, SliderFilledTrack, SliderThumb, SliderMark, VStack, Input, Button, Center, Box, Image, Flex, Badge, Text, Textarea, ButtonGroup, Heading, Container, SimpleGrid, HStack, Avatar, Select, Tag, TagCloseButton, TagLabel 
   } from '@chakra-ui/react';
-
 const clubTagOptions = ["STEM", "Humanities/Art", "Honor Society", "Volunteering", "Career Oriented", "Greek Life", "Outdoors", "Athletics"];
 const colorSchemes = ["teal", "red", "blue", "green", "purple", "orange", "pink", "cyan", "yellow"];
 
-export default function Home({
-  isConnected,
-}) {
+export default function Home() {
   const getRandomColorScheme = () => {
     const randomIndex = Math.floor(Math.random() * colorSchemes.length);
     return colorSchemes[randomIndex];
   };
 
-
+  function isError(input, value) {
+    return input === value;
+  }  
+  
   const [clubName, setClubName] = useState("");
+  const [clubNameError, setClubNameError] = useState("");
   const handleClubNameChange = (event) => {
     setClubName(event.target.value);
   }
 
   
   const [repName, setRepName] = useState("");
+  const [repNameError, setRepNameError] = useState("");
   const handleRepNameChange = (event) => {
     setRepName(event.target.value);
   }
 
 
   const [GTEmail, setGTEmail] = useState("");
+  const [GTEmailError, setGTEmailError] = useState("");
   const handleGTEmailChange = (event) => {
     setGTEmail(event.target.value);
   }
 
 
   const [description, setDescription] = useState("");
+  const [descriptionError, setDescriptionError] = useState("");
   const handleDescriptionChange = (event) => {
     setDescription(event.target.value);
   }
@@ -45,6 +49,7 @@ export default function Home({
   const [selectedMeetingDay, setSelectedMeetingDay] = useState("");
   const [selectedMeetingTime, setSelectedMeetingTime] = useState("");
   const [meetingTimes, setMeetingTimes] = useState([]);
+  const [meetingsError, setMeetingsError] = useState("");
   const handleMeetingTimeAdd = () => {
     if (selectedMeetingDay && selectedMeetingTime) {
       const newMeetingTime = `${selectedMeetingDay} at ${selectedMeetingTime}`;
@@ -66,6 +71,7 @@ export default function Home({
 
 
   const [selectedClubTags, setSelectedClubTags] = useState([]);
+  const [clubTagsError, setClubTagsError] = useState("");
   const handleClubTagAdd = (event) => {
     const selectedClubTag = event.target.value;
     if (selectedClubTag !== "") {
@@ -93,19 +99,87 @@ export default function Home({
   }
 
   const [icon, setIcon] = useState();
+  const [iconError, setIconError] = useState("");
   const handleIconChange = (event) => {
     setIcon(URL.createObjectURL(event.target.files[0]));
   }
 
   const [banner, setBanner] = useState();
+  const [bannerError, setBannerError] = useState("");
   const handleBannerChange = (event) => {
     setBanner(URL.createObjectURL(event.target.files[0]));
   }
 
   const [displayFiles, setDisplayFiles] = useState([]);
+  const [displayFilesError, setDisplayFilesError] = useState("");
   const handleDisplayChange = (event) => {
     const selectedFiles = Array.from(event.target.files)
     setDisplayFiles([...displayFiles, ...selectedFiles]);
+  }
+
+  const router = useRouter();
+  const handleSubmit = () => {
+
+    setClubNameError("");
+    setRepNameError("");
+    setGTEmailError("");
+    setDescriptionError("");
+    setMeetingsError("");
+    setClubTagsError("");
+    setIconError("");
+    setBannerError("");
+    setDisplayFilesError("");
+
+    let isValid = true;
+
+    if (clubName === "") {
+      setClubNameError("Club Name is required.");
+      isValid = false;
+    }
+
+    if (repName === "") {
+      setRepNameError("Representative first and last names are required.");
+      isValid = false;
+    }
+
+    if (GTEmail === "") {
+      setGTEmailError("Georgia Tech email is required.");
+      isValid = false;
+    }
+
+    if (description === "") {
+      setDescriptionError("Club description is required.");
+      isValid = false;
+    }
+
+    if (meetingTimes.length === 0) {
+      setMeetingsError("Meeting times are required.");
+      console.log(meetingsError);
+      isValid = false;
+    }
+
+    if (selectedClubTags.length === 0) {
+      setClubTagsError("Club tags are required.");
+      isValid = false;
+    }
+
+    if (icon === undefined) {
+      setIconError("Club icon is required.");
+      isValid = false;
+    }
+
+    if (banner === undefined) {
+      setBannerError("Club banner is required.");
+      isValid = false;
+    }
+
+    if (displayFiles.length === 0) {
+      setDisplayFilesError("Club display images are required");
+      isValid = false;
+    }
+    if (isValid) {
+      router.push("/submitPage");
+    }
   }
 
   return (
@@ -130,32 +204,36 @@ export default function Home({
           </Text>
 
 
-          <FormControl isRequired mt="10">
+          <FormControl isRequired isInvalid={clubNameError !== ""} mt="10">
             <FormLabel>Club Name </FormLabel>
             <Input placeholder="Enter Here" value={clubName} onChange={handleClubNameChange}/>
+            <FormErrorMessage>{clubNameError}</FormErrorMessage>
           </FormControl>
           
 
-          <FormControl isRequired mt="10">
+          <FormControl isRequired isInvalid={repNameError !== ""} mt="10">
             <FormLabel>First and Last Name </FormLabel>
             <Input placeholder="Enter Here" value={repName} onChange={handleRepNameChange}/>
+            {repNameError && <FormErrorMessage>{repNameError}</FormErrorMessage>}
           </FormControl>
 
 
-          <FormControl isRequired mt="8">
+          <FormControl isRequired isInvalid={GTEmailError !== ""}mt="8">
             <FormLabel>Georgia Tech Email</FormLabel>
             <InputGroup>
               <Input placeholder="Enter Here" value={GTEmail} onChange={handleGTEmailChange} />
               <InputRightAddon width="300px" justifyContent="center" children="@gatech.edu" />
             </InputGroup>
+            {GTEmailError && <FormErrorMessage>{GTEmailError}</FormErrorMessage>}
           </FormControl>
 
-          <FormControl isRequired mt="8">
+          <FormControl isRequired isInvalid={descriptionError !== ""} mt="8">
             <FormLabel>Description</FormLabel>
             <Textarea placeholder="Enter Here" value={description} onChange={handleDescriptionChange}/>
+            {descriptionError && <FormErrorMessage>{descriptionError}</FormErrorMessage>}
           </FormControl>
 
-          <FormControl isRequired mt="8">
+          <FormControl isRequired isInvalid={meetingsError !== ""} mt="8">
             <FormLabel>Meeting Timings</FormLabel>
             <Select mt="3" placeholder="Select a Day" value={selectedMeetingDay} onChange={(event) => setSelectedMeetingDay(event.target.value)}>
               {["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"].map((day) => (
@@ -185,9 +263,10 @@ export default function Home({
                 </Tag>
               ))}
             </Box>
+            {meetingsError && <FormErrorMessage>{meetingsError}</FormErrorMessage>}
           </FormControl>
 
-          <FormControl isRequired mt="8">
+          <FormControl isRequired isInvalid={clubTagsError !== ""} mt="8">
             <FormLabel>Club Tags</FormLabel>
             <Select mt="3" placeholder="Select Tags" onChange={handleClubTagAdd}>
               {clubTagOptions.map((tag) => (
@@ -204,6 +283,7 @@ export default function Home({
                 </Tag>
               ))}
             </Box>
+            {clubTagsError && <FormErrorMessage>{clubTagsError}</FormErrorMessage>}
           </FormControl>
 
           <FormControl isRequired mt="8" display="flex" alignItems="center">
@@ -233,26 +313,30 @@ export default function Home({
             </Slider>
           </FormControl>
 
-          <FormControl isRequired mt="8" display="flex">
+          <FormControl isRequired isInvalid={iconError !== ""} mt="8" display="flex">
             <FormLabel>Upload Club icon Image</FormLabel>
             <input type="file" onChange={handleIconChange} />
+            {iconError && <FormErrorMessage>{iconError}</FormErrorMessage>}
           </FormControl>
 
-          <FormControl isRequired mt="8" display="flex">
+          <FormControl isRequired isInvalid={bannerError !== ""} mt="8" display="flex">
             <FormLabel>Upload Club Banner Image</FormLabel>
             <input type="file" onChange={handleBannerChange} />
+            {bannerError && <FormErrorMessage>{bannerError}</FormErrorMessage>}
           </FormControl>
 
-          <FormControl isRequired mt="8" display="flex">
+          <FormControl isRequired isInvalid={displayFilesError !== ""} mt="8" display="flex">
             <FormLabel>Upload Display Images</FormLabel>
             <input type="file" multiple onChange={handleDisplayChange} />
             <Text>{displayFiles.length} files uploaded</Text>
+            {displayFilesError && <FormErrorMessage>{displayFilesError}</FormErrorMessage>}
           </FormControl>
           <Button
             mt="10"
             color= "white" 
             bg="blue.700"
             size="lg"
+            onClick={handleSubmit}
           >
             Submit
           </Button>
