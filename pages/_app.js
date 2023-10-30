@@ -3,6 +3,7 @@ import '@uiw/react-markdown-preview/esm/styles/markdown.css';
 import { ChakraProvider } from '@chakra-ui/react'
 import { useColorMode } from "@chakra-ui/react";
 import { useEffect } from "react";
+import { ClerkProvider } from '@clerk/nextjs';
 
 function ForceLightMode({ children }) {
   // force light mode b/c of ChakraUI bug
@@ -17,11 +18,13 @@ function ForceLightMode({ children }) {
 
 function MyApp({ Component, pageProps }) {
   return (
-    <ChakraProvider>
-        <ForceLightMode>
-      <Component {...pageProps} />
-      </ForceLightMode>
-    </ChakraProvider>
+    <ClerkProvider {...pageProps}>
+      <ChakraProvider>
+          <ForceLightMode>
+        <Component {...pageProps} />
+        </ForceLightMode>
+      </ChakraProvider>
+    </ClerkProvider>
   )
 }
 
