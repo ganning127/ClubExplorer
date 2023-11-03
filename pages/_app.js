@@ -7,7 +7,6 @@ import { ClerkProvider } from '@clerk/nextjs';
 
 const publicPages = [
   "/",
-  "/note/[slug]",
   "/sign-in/[[...index]]",
   "/sign-up/[[...index]]",
 ];
@@ -33,6 +32,7 @@ function MyApp({ Component, pageProps }) {
         <Component {...pageProps} />
         </ForceLightMode>
       </ChakraProvider>
+
     </ClerkProvider>
   )
 }
