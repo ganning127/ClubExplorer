@@ -72,12 +72,9 @@ export default function WithSubnavigation() {
           justify={'flex-end'}
           direction={'row'}
           spacing={6}>
-          <SignInButton>
             <Button as={'a'} fontSize={'sm'} fontWeight={400} variant={'link'} href={'sign-in'} color='white'>
               Sign In
             </Button>
-          </SignInButton>
-          <SignUpButton>
             <Button
               as={'a'}
               display={{ base: 'none', md: 'inline-flex' }}
@@ -91,7 +88,6 @@ export default function WithSubnavigation() {
               }}>
               Sign Up
             </Button>
-          </SignUpButton>
         </Stack>
       </Flex>
 

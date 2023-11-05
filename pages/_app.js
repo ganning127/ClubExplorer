@@ -3,10 +3,15 @@ import '@uiw/react-markdown-preview/esm/styles/markdown.css';
 import { ChakraProvider } from '@chakra-ui/react'
 import { useColorMode } from "@chakra-ui/react";
 import { useEffect } from "react";
-import { ClerkProvider } from '@clerk/nextjs';
+import {
+  ClerkProvider,
+  SignedIn,
+  SignedOut,
+  RedirectToSignIn,
+} from "@clerk/nextjs";
+import { useRouter } from "next/router";
 
 const publicPages = [
-  "/",
   "/sign-in/[[...index]]",
   "/sign-up/[[...index]]",
 ];
@@ -22,19 +27,58 @@ function ForceLightMode({ children }) {
   return children;
 }
 
-const isPublicPage = publicPages.includes(pathname);
 function MyApp({ Component, pageProps }) {
+  const { pathname } = useRouter();
+  const isPublicPage = publicPages.includes(pathname);
   return (
     <ClerkProvider {...pageProps}>
       
       <ChakraProvider>
           <ForceLightMode>
-        <Component {...pageProps} />
+          {isPublicPage ? (
+             <Component {...pageProps} />
+           ) : (
+           <>
+             <SignedIn>
+               <Component {...pageProps} />
+             </SignedIn>
+             <SignedOut>
+               <RedirectToSignIn />
+             </SignedOut>
+           </>)}
         </ForceLightMode>
       </ChakraProvider>
-
     </ClerkProvider>
   )
 }
 
 export default MyApp;
+
+{/* <ClerkProvider {...pageProps}>
+      
+      <ChakraProvider>
+          <ForceLightMode>
+          {isPublicPage ? (
+             <Component {...pageProps} />
+           ) : (
+           <>
+             <SignedIn>
+               <Component {...pageProps} />
+             </SignedIn>
+             <SignedOut>
+               <RedirectToSignIn />
+             </SignedOut>
+           </>)}
+        </ForceLightMode>
+      </ChakraProvider>
+    </ClerkProvider> 
+  
+  Base attempt:
+
+  <ClerkProvider {...pageProps}>
+      <ChakraProvider>
+          <ForceLightMode>
+            <Component {...pageProps} />
+        </ForceLightMode>
+      </ChakraProvider>
+    </ClerkProvider>*/}
