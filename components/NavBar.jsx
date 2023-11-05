@@ -22,7 +22,7 @@ import {
   ChevronDownIcon,
   ChevronRightIcon,
 } from '@chakra-ui/icons'
-import { SignInButton, SignOutButton, SignUpButton, SignedIn, SignedOut } from '@clerk/nextjs'
+import { SignInButton, SignOutButton, SignUpButton, SignedIn, SignedOut, UserButton } from '@clerk/nextjs'
 
 export default function WithSubnavigation() {
   const { isOpen, onToggle } = useDisclosure()
@@ -91,7 +91,7 @@ export default function WithSubnavigation() {
               </Button>
             </SignedOut>
             <SignedIn>
-              <SignOutButton>Sign Out</SignOutButton>
+              <UserButton afterSignOutUrl="/"/>
             </SignedIn>
         </Stack>
       </Flex>

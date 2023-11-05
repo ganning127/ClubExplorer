@@ -12,7 +12,7 @@ import {
 import { useRouter } from "next/router";
 
 const publicPages = [
-  "",
+  "/",
   "/sign-in/[[...index]]",
   "/sign-up/[[...index]]",
 ];
