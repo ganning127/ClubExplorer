@@ -22,7 +22,7 @@ import {
   ChevronDownIcon,
   ChevronRightIcon,
 } from '@chakra-ui/icons'
-import { SignInButton, SignUpButton } from '@clerk/nextjs'
+import { SignInButton, SignOutButton, SignUpButton, SignedIn, SignedOut } from '@clerk/nextjs'
 
 export default function WithSubnavigation() {
   const { isOpen, onToggle } = useDisclosure()
@@ -72,22 +72,27 @@ export default function WithSubnavigation() {
           justify={'flex-end'}
           direction={'row'}
           spacing={6}>
-            <Button as={'a'} fontSize={'sm'} fontWeight={400} variant={'link'} href={'sign-in'} color='white'>
-              Sign In
-            </Button>
-            <Button
-              as={'a'}
-              display={{ base: 'none', md: 'inline-flex' }}
-              fontSize={'sm'}
-              fontWeight={600}
-              color={'white'}
-              bg={'#16425B'}
-              href={'sign-up'}
-              _hover={{
-                bg: 'pink.300',
-              }}>
-              Sign Up
-            </Button>
+            <SignedOut>
+              <Button as={'a'} fontSize={'sm'} fontWeight={400} variant={'link'} href={'sign-in'} color='white'>
+                Sign In
+              </Button>
+              <Button
+                as={'a'}
+                display={{ base: 'none', md: 'inline-flex' }}
+                fontSize={'sm'}
+                fontWeight={600}
+                color={'white'}
+                bg={'#16425B'}
+                href={'sign-up'}
+                _hover={{
+                  bg: 'pink.300',
+                }}>
+                Sign Up
+              </Button>
+            </SignedOut>
+            <SignedIn>
+              <SignOutButton>Sign Out</SignOutButton>
+            </SignedIn>
         </Stack>
       </Flex>
 
