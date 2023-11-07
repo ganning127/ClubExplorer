@@ -3,8 +3,9 @@ import NavBar from "../components/NavBar";
 import React, { useState, useEffect} from "react";
 import { useRouter } from 'next/router';
 import {
-   InputGroup, InputRightAddon, FormControl, FormLabel, FormErrorMessage, Switch, Slider, SliderTrack, SliderFilledTrack, SliderThumb, SliderMark, VStack, Input, Button, Center, Box, Image, Flex, Badge, Text, Textarea, ButtonGroup, Heading, Container, SimpleGrid, HStack, Avatar, Select, Tag, TagCloseButton, TagLabel 
+   InputGroup, InputRightAddon, FormControl, FormLabel, FormErrorMessage, Switch, Slider, SliderTrack, SliderFilledTrack, SliderThumb, SliderMark, VStack, Input, IconButton, Button, Center, Box, Image, Flex, Badge, Text, Textarea, ButtonGroup, Heading, Container, SimpleGrid, HStack, Avatar, Select, Tag, TagCloseButton, TagLabel 
   } from '@chakra-ui/react';
+import { CloseIcon } from '@chakra-ui/icons';
 const clubTagOptions = ["STEM", "Humanities/Art", "Honor Society", "Volunteering", "Career Oriented", "Greek Life", "Outdoors", "Athletics"];
 const colorSchemes = ["teal", "red", "blue", "green", "purple", "orange", "pink", "cyan", "yellow"];
 
@@ -39,10 +40,16 @@ export default function addClub() {
   }
 
 
-  const [description, setDescription] = useState("");
-  const [descriptionError, setDescriptionError] = useState("");
-  const handleDescriptionChange = (event) => {
-    setDescription(event.target.value);
+  const [longDescription, setLongDescription] = useState("");
+  const [longDescriptionError, setLongDescriptionError] = useState("");
+  const handleLongDescriptionChange = (event) => {
+    setLongDescription(event.target.value);
+  }
+
+  const [shortDescription, setShortDescription] = useState("");
+  const [shortDescriptionError, setShortDescriptionError] = useState("");
+  const handleShortDescriptionChange = (event) => {
+    setShortDescription(event.target.value);
   }
 
 
@@ -94,17 +101,44 @@ export default function addClub() {
 
 
   const [numMembers, setNumMembers] = useState(250);
-  const handleSliderChange = (value) => {
+  const handleMembersChange = (value) => {
     setNumMembers(value);
   }
 
-  const [icon, setIcon] = useState();
+  const [commHours, setCommHours] = useState(0);
+  const handleCommHoursChange = (value) => {
+    setCommHours(value);
+  }
+
+  const [faqList, setFaqList] = useState([]);
+  const [newQuestion, setNewQuestion] = useState("");
+  const [newAnswer, setNewAnswer] = useState("");
+
+  const handleAddFaq = () => {
+    if (newQuestion.trim() !== "" && newAnswer.trim() !== "") {
+      const newFaq = { question: newQuestion, answer: newAnswer };
+      setFaqList([...faqList, newFaq]);
+      setNewQuestion("");
+      setNewAnswer("");
+    }
+  };
+  const handleRemoveFaq = (index) => {
+    const updatedFaqList = [...faqList];
+    updatedFaqList.splice(index, 1);
+    setFaqList(updatedFaqList);
+  };
+  useEffect(() => {
+    console.log("FAQ List:", faqList);
+  }, [faqList]);
+  
+
+  const [icon, setIcon] = useState("");
   const [iconError, setIconError] = useState("");
   const handleIconChange = (event) => {
     setIcon(URL.createObjectURL(event.target.files[0]));
   }
 
-  const [banner, setBanner] = useState();
+  const [banner, setBanner] = useState("");
   const [bannerError, setBannerError] = useState("");
   const handleBannerChange = (event) => {
     setBanner(URL.createObjectURL(event.target.files[0]));
@@ -123,7 +157,8 @@ export default function addClub() {
     setClubNameError("");
     setRepNameError("");
     setGTEmailError("");
-    setDescriptionError("");
+    setLongDescriptionError("");
+    setShortDescriptionError("");
     setMeetingsError("");
     setClubTagsError("");
     setIconError("");
@@ -147,8 +182,16 @@ export default function addClub() {
       isValid = false;
     }
 
-    if (description === "") {
-      setDescriptionError("Club description is required.");
+    if (longDescription === "") {
+      setLongDescriptionError("Long club description is required.");
+      isValid = false;
+    }
+
+    if (shortDescription === "") {
+      setShortDescriptionError("Short club description is required.");
+      isValid = false;
+    } else if (shortDescription.length > 250) {
+      setShortDescriptionError("Short club description must be less than 250 characters.");
       isValid = false;
     }
 
@@ -227,12 +270,6 @@ export default function addClub() {
             {GTEmailError && <FormErrorMessage>{GTEmailError}</FormErrorMessage>}
           </FormControl>
 
-          <FormControl isRequired isInvalid={descriptionError !== ""} mt="8">
-            <FormLabel>Description</FormLabel>
-            <Textarea placeholder="Enter Here" value={description} onChange={handleDescriptionChange}/>
-            {descriptionError && <FormErrorMessage>{descriptionError}</FormErrorMessage>}
-          </FormControl>
-
           <FormControl isRequired isInvalid={meetingsError !== ""} mt="8">
             <FormLabel>Meeting Timings</FormLabel>
             <Select mt="3" placeholder="Select a Day" value={selectedMeetingDay} onChange={(event) => setSelectedMeetingDay(event.target.value)}>
@@ -302,16 +339,93 @@ export default function addClub() {
               max={500}
               step={50}
               value={numMembers}
-              onChange={handleSliderChange}
+              onChange={handleMembersChange}
             >
               <SliderTrack>
                 <SliderFilledTrack />
               </SliderTrack>
               <SliderThumb fontSize="sm" boxSize={10} color="white" bg="blue.700" _hover={{ bg: 'blue.500' }}>{numMembers}</SliderThumb>
-              <SliderMark mt="3" value={-2}>0</SliderMark>
-              <SliderMark mt="3" value={492}>500+</SliderMark>
+              <SliderMark mt="3" value={0}>0</SliderMark>
+              <SliderMark mt="3" value={500}>500+</SliderMark>
             </Slider>
           </FormControl>
+
+          <FormControl isRequired mt="8">
+            <FormLabel>Hours of commitment per week</FormLabel>
+            <Slider
+              mt="3"
+              aria-label="Approximate hours of commitment per week"
+              min={0}
+              max={20}
+              step={1}
+              value={commHours}
+              onChange={handleCommHoursChange}
+            >
+              <SliderTrack>
+                <SliderFilledTrack />
+              </SliderTrack>
+              <SliderThumb fontSize="sm" boxSize={10} color="white" bg="blue.700" _hover={{ bg: 'blue.500' }}>{commHours}</SliderThumb>
+              <SliderMark mt="3" value={0}>0</SliderMark>
+              <SliderMark mt="3" value={20}>20+</SliderMark>
+            </Slider>
+          </FormControl>
+
+          <FormControl isRequired isInvalid={longDescriptionError !== ""} mt="8">
+            <FormLabel>Long Description: </FormLabel>
+            <Textarea placeholder="Enter Here" value={longDescription} onChange={handleLongDescriptionChange}/>
+            {longDescriptionError && <FormErrorMessage>{longDescriptionError}</FormErrorMessage>}
+          </FormControl>
+
+          <FormControl isRequired isInvalid={shortDescriptionError !== ""} mt="8">
+            <FormLabel>Short Description: </FormLabel>
+            <Textarea placeholder="Enter Here (<250 Characters)" value={shortDescription} onChange={handleShortDescriptionChange}/>
+            {shortDescriptionError && <FormErrorMessage>{shortDescriptionError}</FormErrorMessage>}
+          </FormControl>
+
+          <FormControl mt="8">
+            <FormLabel>Question:</FormLabel>
+            <Input
+              placeholder="Enter Here"
+              value={newQuestion}
+              onChange={(e) => setNewQuestion(e.target.value)}
+            />
+          </FormControl>
+
+          <FormControl mt="3">
+            <FormLabel>Answer:</FormLabel>
+            <Input
+              placeholder="Enter Here"
+              value={newAnswer}
+              onChange={(e) => setNewAnswer(e.target.value)}
+            />
+          </FormControl>
+
+          <Button
+            mt="3"
+            onClick={handleAddFaq}
+            color="white"
+            bg="blue.700"
+            disabled={newQuestion.trim() === "" || newAnswer.trim() === ""}
+          >
+            Add FAQ
+          </Button>
+
+            {faqList.map((faq, index) => (
+              <Box key={index} borderWidth="1px" borderRadius="md" p="3" mt="3" position="relative">
+                <Text fontWeight="bold">Question: {faq.question}</Text>
+                <Text>Answer: {faq.answer}</Text>
+                <IconButton
+                  icon={<CloseIcon />}
+                  size="sm"
+                  colorScheme="red"
+                  position="absolute"
+                  top="5px"
+                  right="5px"
+                  onClick={() => handleRemoveFaq(index)}
+                />
+              </Box>
+            ))}
+
 
           <FormControl isRequired isInvalid={iconError !== ""} mt="8" display="flex">
             <FormLabel>Upload Club icon Image</FormLabel>
