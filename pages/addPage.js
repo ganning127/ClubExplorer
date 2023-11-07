@@ -8,7 +8,7 @@ import {
 const clubTagOptions = ["STEM", "Humanities/Art", "Honor Society", "Volunteering", "Career Oriented", "Greek Life", "Outdoors", "Athletics"];
 const colorSchemes = ["teal", "red", "blue", "green", "purple", "orange", "pink", "cyan", "yellow"];
 
-export default function Home() {
+export default function addClub() {
   const getRandomColorScheme = () => {
     const randomIndex = Math.floor(Math.random() * colorSchemes.length);
     return colorSchemes[randomIndex];
