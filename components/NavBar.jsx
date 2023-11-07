@@ -1,6 +1,7 @@
-'use client'
+'use client';
 
-import {
+import
+{
   Box,
   Flex,
   Text,
@@ -25,8 +26,9 @@ import {
 } from '@chakra-ui/icons'
 import { SignInButton, SignOutButton, SignUpButton, SignedIn, SignedOut, UserButton } from '@clerk/nextjs'
 
-export default function WithSubnavigation() {
-  const { isOpen, onToggle } = useDisclosure()
+export default function WithSubnavigation()
+{
+  const { isOpen, onToggle } = useDisclosure();
 
   return (
     <Box bg="#16425B">
@@ -92,17 +94,18 @@ export default function WithSubnavigation() {
         </Stack>
       </Flex>
 
-      <Collapse in={isOpen}  animateOpacity>
+      <Collapse in={isOpen} animateOpacity>
         <MobileNav />
       </Collapse>
     </Box>
-  )
+  );
 }
 
-const DesktopNav = () => {
-  const linkColor = "white"
-  const linkHoverColor = "blue.300"
-  const popoverContentBgColor = useColorModeValue('white', 'gray.800')
+const DesktopNav = () =>
+{
+  const linkColor = "white";
+  const linkHoverColor = "blue.300";
+  const popoverContentBgColor = useColorModeValue('white', 'gray.800');
 
   return (
     <Stack direction={'row'} spacing={4}>
@@ -144,10 +147,11 @@ const DesktopNav = () => {
         </Box>
       ))}
     </Stack>
-  )
-}
+  );
+};
 
-const DesktopSubNav = ({ label, href, subLabel }) => {
+const DesktopSubNav = ({ label, href, subLabel }) =>
+{
   return (
     <Box
       as="a"
@@ -179,21 +183,23 @@ const DesktopSubNav = ({ label, href, subLabel }) => {
         </Flex>
       </Stack>
     </Box>
-  )
-}
+  );
+};
 
-const MobileNav = () => {
+const MobileNav = () =>
+{
   return (
     <Stack bg="#16425B" p={4} display={{ md: 'none' }}>
       {NAV_ITEMS.map((navItem) => (
         <MobileNavItem key={navItem.label} {...navItem} />
       ))}
     </Stack>
-  )
-}
+  );
+};
 
-const MobileNavItem = ({ label, children, href }) => {
-  const { isOpen, onToggle } = useDisclosure()
+const MobileNavItem = ({ label, children, href }) =>
+{
+  const { isOpen, onToggle } = useDisclosure();
 
   return (
     <Stack spacing={4} onClick={children && onToggle} color="white">
@@ -237,24 +243,24 @@ const MobileNavItem = ({ label, children, href }) => {
         </Stack>
       </Collapse>
     </Stack>
-  )
-}
+  );
+};
 
 const NAV_ITEMS = [
   {
     label: 'Club Dashboard',
-    href:"#",
+    href: "/explore",
   },
-  {
-    label: 'My Clubs',
-    href: '#',
-  },
-  {
-    label: 'About Us',
-    href: "#",
-  },
-  {
-    label: 'FAQ',
-    href: '#',
-  },
-]
+  // {
+  //   label: 'My Clubs',
+  //   href: '#',
+  // },
+  // {
+  //   label: 'About Us',
+  //   href: "#",
+  // },
+  // {
+  //   label: 'FAQ',
+  //   href: '#',
+  // },
+];

@@ -1,17 +1,103 @@
 import Head from 'next/head';
 import clientPromise from '../lib/mongodb';
-import NavBar from "../components/NavBar";
-import { Button, Center, Box, Image, Flex, Badge, Text, Link, ButtonGroup, Heading, Container, SimpleGrid, HStack } from '@chakra-ui/react';
-import { useEffect } from 'react';
+import { Button, Center, Box, Image, Flex, Badge, Text, Link, Spinner, ButtonGroup, Heading, Container, SimpleGrid, HStack } from '@chakra-ui/react';
+import { useState, useEffect, useRef } from 'react';
 import { Input, Grid } from "@chakra-ui/react";
-import Navbar from "../components/NavBar";
-// import Card from "../components/ExploreCard";
 
-export default function Explore({ success, clubs })
+import NavBar from "../components/NavBar";
+import Filters from "../components/Filters";
+import Card from "../components/ExploreCard";
+import SearchBar from "../components/SearchBar";
+
+
+// param `initialClubs` is an object with data for each club initially pulled from Mongo via `getServerSideProps()`
+export default function Explore({ success, initialClubs })
 {
 
-    console.log(success);
-    console.log(clubs);
+    const [clubs, setClubs] = useState(initialClubs);  // initially populated by `getServerSideProps`; then appended with `fetchMoreCards` 
+    const [skip, setSkip] = useState(initialClubs.length);  // # of items to skip over in db query (because already fetched) 
+    const [loading, setLoading] = useState(false);
+    const limit = 6;  // how many clubs to fetch at a time 
+    const scrollContainer = useRef(null);
+    let isThrottled = false;
+    let moreCardsExist = true;
+
+
+    const fetchMoreCards = async (currentSkip) =>
+    {
+        setLoading(true);
+
+        if (!moreCardsExist) return;
+        if (isThrottled) return;
+        isThrottled = true;
+
+        try
+        {
+            const response = await fetch(`/api/getExploreCardData?skip=${currentSkip}&limit=${limit}`);
+            if (response.ok)
+            {
+                const newClubs = await response.json();
+
+                if (newClubs.length > 0)
+                {
+                    // Use functional updates to ensure you're using the most recent previous state when updating current state
+                    setClubs(prevClubs => [...prevClubs, ...newClubs]);
+                    setSkip(prevSkip => prevSkip + limit);
+                } else
+                {
+                    console.log("All cards have been fetched.");
+                    moreCardsExist = false;
+                }
+
+
+            } else
+            {
+                console.error('HTTP error when fetching new cards: ', response.status, response.statusText);
+            }
+
+            setLoading(false);
+
+        } catch (e)
+        {
+            console.error('Error when fetching new cards: ', e);
+        }
+
+        // to prevent multiple concurrent calls which may create weird behavior 
+        setTimeout(() =>
+        {
+            isThrottled = false;
+        }, 200);
+    };
+
+
+    useEffect(() =>
+    {
+
+        const handleScroll = () =>
+        {
+
+            // find whether the user has scrolled to the bottom of the grid 
+            const cardGrid = scrollContainer.current;
+            const offset = 50;  // will fetch more cards when you scroll to within this many px of the bottom 
+            const isNearBottom = cardGrid.scrollTop + cardGrid.clientHeight + offset >= cardGrid.scrollHeight;
+
+            if (isNearBottom)
+            {
+                fetchMoreCards(skip);
+            }
+        };
+
+        const cardGrid = scrollContainer.current;
+        cardGrid.addEventListener("scroll", handleScroll);
+
+        // this runs when the component unmounts and before each subsequent time useEffect runs 
+        return () =>
+        {
+            cardGrid.removeEventListener("scroll", handleScroll);
+        };
+    }, [skip]);  // useEffect runs on initial render and whenever `skip` is updated 
+
+
 
     return (
         <>
@@ -22,91 +108,85 @@ export default function Explore({ success, clubs })
 
             <NavBar />
 
-            {/* <Container maxW='container.xl' mx="auto" > */}
-            <Flex>
-                <Box w="20%" p={4}>
 
-                    {/* Search Filters */}
-                    <Box mb={4}>
-                        <Input placeholder="Filter 1" />
-                    </Box>
-                    <Box mb={4}>
-                        <Input placeholder="Filter 2" />
-                    </Box>
-                    {/* Add more filters here */}
+            {/* main page layout */}
+            <Grid
+                columns={{ base: 1, md: 2, lg: 3, xl: 4 }}
+                gridGap={{ base: "20px", lg: "30px", xl: "40px" }}
+                textAlign={{ base: "center", lg: "left" }}
+                w={{ base: "100%", md: "95%", lg: "90%", xl: "85%" }}
+                mx="auto" spacing={4} alignItems="center" mt={8}
+            >
+
+                {/* Filters */}
+                <Box gridColumn="1" gridRow="2" alignSelf="start">
+                    <Filters />
                 </Box>
 
-                <Box w="80%" p={4}>
-                    {/* Search Bar */}
-                    <Box mb={4}>
-                        <Input placeholder="Search organizations" />
-                    </Box>
-                    <SimpleGrid columns={{ base: 1, md: 2, lg: 3 }} alignItems='center' mt={8} textAlign={{ base: "center", lg: "left" }} spacing={4}>
+
+                {/* Search Bar */}
+                <Box
+                    gridColumn={{ base: 1, md: 2 }} gridRow="1"
+                    display="flex" justifyContent="center" alignItems="center"
+                >
+                    <SearchBar />
+                </Box>
+
+
+                {/* ExploreCards */}
+                <SimpleGrid
+                    gridColumn={{ base: 1, md: 2 }} gridRow={{ base: 3, md: 2 }}
+                    columns={{ base: 1, lg: 2, xl: 3 }}
+                    textAlign={{ base: "center", lg: "left" }}
+                    spacing={4} alignItems="center" pr={4}
+                    maxHeight="80vh" overflowY="auto"  // makes content in this element scrollable 
+                    ref={scrollContainer}  // React makes scrollContainer point to this DOM element
+
+                >{
+                        clubs.map((club, index) =>
                         {
-                            clubs.map((club, index) =>
-                            {
-                                return (
-                                    <Link href={`/club/${club.slug}`} _hover={{}} key={index}>
-                                        <Box p={4} shadow="xl" rounded="md" _hover={{
-                                            background: "gray.100",
-                                            transition: "all .2s"
-                                        }}>
-                                            <Heading fontSize="lg">
-                                                {club.name}
-                                            </Heading>
+                            return <Card club={club} index={index} />;
+                        })
+                    }
 
-                                            <HStack mt={2}>
-                                                {
-                                                    club.tags.map((tag, index) =>
-                                                    {
-                                                        return (
-                                                            <Badge key={index} colorScheme="blue">{tag}</Badge>
-                                                        );
-                                                    })
-                                                }
-                                            </HStack>
-
-                                            <Text fontSize='md' mt={4}>
-                                                {club.shortDesc}
-                                            </Text>
-                                        </Box>
-                                    </Link>
-                                );
-                            })
-                        }
-
-                    </SimpleGrid>
-                </Box>
-
-            </Flex>
+                    {
+                        loading && <Spinner size='lg' />
+                    }
+                </SimpleGrid>
 
 
-            {/* </Container> */}
+            </Grid>
+
         </>
     );
 }
+
+
 
 export async function getServerSideProps(context)
 {
     try
     {
+
         const client = await clientPromise;
         const db = client.db("clubs");
         const collection = db.collection("clubsMain");
 
-        let clubs = await collection.find({}).toArray();
+        const limit = 12;  // how many clubs to fetch initially 
+
+        let clubs = await collection.find({}).limit(limit).toArray();
         clubs = JSON.parse(JSON.stringify(clubs));
 
-        let objToReturn = {
+        return {
             props: {
                 success: true,
-                clubs: clubs
+                initialClubs: clubs
             }
         };
-        return objToReturn;
 
     } catch (e)
     {
+
         console.error(e);
         return {
             props: { success: false },
