@@ -105,7 +105,7 @@ export default function addClub() {
     setNumMembers(value);
   }
 
-  const [commHours, setCommHours] = useState(0);
+  const [commHours, setCommHours] = useState(10);
   const handleCommHoursChange = (value) => {
     setCommHours(value);
   }
@@ -248,21 +248,21 @@ export default function addClub() {
 
 
           <FormControl isRequired isInvalid={clubNameError !== ""} mt="10">
-            <FormLabel>Club Name </FormLabel>
+            <FormLabel fontWeight="bold">Club Name </FormLabel>
             <Input placeholder="Enter Here" value={clubName} onChange={handleClubNameChange}/>
             <FormErrorMessage>{clubNameError}</FormErrorMessage>
           </FormControl>
           
 
           <FormControl isRequired isInvalid={repNameError !== ""} mt="10">
-            <FormLabel>First and Last Name </FormLabel>
+            <FormLabel fontWeight="bold">First and Last Name </FormLabel>
             <Input placeholder="Enter Here" value={repName} onChange={handleRepNameChange}/>
             {repNameError && <FormErrorMessage>{repNameError}</FormErrorMessage>}
           </FormControl>
 
 
           <FormControl isRequired isInvalid={GTEmailError !== ""}mt="8">
-            <FormLabel>Georgia Tech Email</FormLabel>
+            <FormLabel fontWeight="bold">Georgia Tech Email</FormLabel>
             <InputGroup>
               <Input placeholder="Enter Here" value={GTEmail} onChange={handleGTEmailChange} />
               <InputRightAddon width="300px" justifyContent="center" children="@gatech.edu" />
@@ -271,7 +271,7 @@ export default function addClub() {
           </FormControl>
 
           <FormControl isRequired isInvalid={meetingsError !== ""} mt="8">
-            <FormLabel>Meeting Timings</FormLabel>
+            <FormLabel fontWeight="bold">Meeting Timings</FormLabel>
             <Select mt="3" placeholder="Select a Day" value={selectedMeetingDay} onChange={(event) => setSelectedMeetingDay(event.target.value)}>
               {["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"].map((day) => (
                 <option key={day} value={day}>
@@ -304,7 +304,7 @@ export default function addClub() {
           </FormControl>
 
           <FormControl isRequired isInvalid={clubTagsError !== ""} mt="8">
-            <FormLabel>Club Tags</FormLabel>
+            <FormLabel fontWeight="bold">Club Tags</FormLabel>
             <Select mt="3" placeholder="Select Tags" onChange={handleClubTagAdd}>
               {clubTagOptions.map((tag) => (
                 <option key={tag} value={tag}>
@@ -324,14 +324,14 @@ export default function addClub() {
           </FormControl>
 
           <FormControl isRequired mt="8" display="flex" alignItems="center">
-            <FormLabel htmlFor="hasApplication" mb="0">
+            <FormLabel fontWeight="bold" htmlFor="hasApplication" mb="0">
               Club Requires Application?
             </FormLabel>
             <Switch colorScheme="green" id="hasApplication" isChecked={hasApplication} onChange={handleApplicationChange} />
           </FormControl>
 
           <FormControl isRequired mt="8">
-            <FormLabel>Number of Members</FormLabel>
+            <FormLabel fontWeight="bold">Number of Members</FormLabel>
             <Slider
               mt="3"
               aria-label="Approximate Number of Members"
@@ -345,13 +345,13 @@ export default function addClub() {
                 <SliderFilledTrack />
               </SliderTrack>
               <SliderThumb fontSize="sm" boxSize={10} color="white" bg="blue.700" _hover={{ bg: 'blue.500' }}>{numMembers}</SliderThumb>
-              <SliderMark mt="3" value={0}>0</SliderMark>
-              <SliderMark mt="3" value={500}>500+</SliderMark>
+              <SliderMark mt="3" fontWeight="bold" value={0}>0</SliderMark>
+              <SliderMark mt="3" fontWeight="bold" value={500}>500+</SliderMark>
             </Slider>
           </FormControl>
 
           <FormControl isRequired mt="8">
-            <FormLabel>Hours of commitment per week</FormLabel>
+            <FormLabel fontWeight="bold">Hours of commitment per week</FormLabel>
             <Slider
               mt="3"
               aria-label="Approximate hours of commitment per week"
@@ -365,25 +365,25 @@ export default function addClub() {
                 <SliderFilledTrack />
               </SliderTrack>
               <SliderThumb fontSize="sm" boxSize={10} color="white" bg="blue.700" _hover={{ bg: 'blue.500' }}>{commHours}</SliderThumb>
-              <SliderMark mt="3" value={0}>0</SliderMark>
-              <SliderMark mt="3" value={20}>20+</SliderMark>
+              <SliderMark mt="3" fontWeight="bold" value={0}>0</SliderMark>
+              <SliderMark mt="3" fontWeight="bold" value={20}>20+</SliderMark>
             </Slider>
           </FormControl>
 
           <FormControl isRequired isInvalid={longDescriptionError !== ""} mt="8">
-            <FormLabel>Long Description: </FormLabel>
+            <FormLabel fontWeight="bold">Long Description: </FormLabel>
             <Textarea placeholder="Enter Here" value={longDescription} onChange={handleLongDescriptionChange}/>
             {longDescriptionError && <FormErrorMessage>{longDescriptionError}</FormErrorMessage>}
           </FormControl>
 
           <FormControl isRequired isInvalid={shortDescriptionError !== ""} mt="8">
-            <FormLabel>Short Description: </FormLabel>
+            <FormLabel fontWeight="bold">Short Description: </FormLabel>
             <Textarea placeholder="Enter Here (<250 Characters)" value={shortDescription} onChange={handleShortDescriptionChange}/>
             {shortDescriptionError && <FormErrorMessage>{shortDescriptionError}</FormErrorMessage>}
           </FormControl>
 
           <FormControl mt="8">
-            <FormLabel>Question:</FormLabel>
+            <FormLabel fontWeight="bold">Question:</FormLabel>
             <Input
               placeholder="Enter Here"
               value={newQuestion}
@@ -392,7 +392,7 @@ export default function addClub() {
           </FormControl>
 
           <FormControl mt="3">
-            <FormLabel>Answer:</FormLabel>
+            <FormLabel fontWeight="bold">Answer:</FormLabel>
             <Input
               placeholder="Enter Here"
               value={newAnswer}
@@ -427,20 +427,20 @@ export default function addClub() {
             ))}
 
 
-          <FormControl isRequired isInvalid={iconError !== ""} mt="8" display="flex">
-            <FormLabel>Upload Club icon Image</FormLabel>
+          <FormControl isRequired isInvalid={iconError !== ""} mt="12" display="flex">
+            <FormLabel fontWeight="bold">Upload Club icon Image</FormLabel>
             <input type="file" onChange={handleIconChange} />
             {iconError && <FormErrorMessage>{iconError}</FormErrorMessage>}
           </FormControl>
 
           <FormControl isRequired isInvalid={bannerError !== ""} mt="8" display="flex">
-            <FormLabel>Upload Club Banner Image</FormLabel>
+            <FormLabel fontWeight="bold">Upload Club Banner Image</FormLabel>
             <input type="file" onChange={handleBannerChange} />
             {bannerError && <FormErrorMessage>{bannerError}</FormErrorMessage>}
           </FormControl>
 
           <FormControl isRequired isInvalid={displayFilesError !== ""} mt="8" display="flex">
-            <FormLabel>Upload Display Images</FormLabel>
+            <FormLabel fontWeight="bold">Upload Display Images</FormLabel>
             <input type="file" multiple onChange={handleDisplayChange} />
             <Text>{displayFiles.length} files uploaded</Text>
             {displayFilesError && <FormErrorMessage>{displayFilesError}</FormErrorMessage>}
