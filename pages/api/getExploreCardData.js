@@ -13,3 +13,4 @@ export default async function handler(req, res) {
 
     res.json(newClubs);  // send JSON data back to client
 }
+
