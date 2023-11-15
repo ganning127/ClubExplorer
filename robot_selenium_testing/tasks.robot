@@ -1,23 +1,25 @@
 *** Settings ***
-Documentation       Robot to solve the first challenge at rpachallenge.com,
-...                 which consists of filling a form that randomly rearranges
-...                 itself for ten times, with data taken from a provided
-...                 Microsoft Excel file.
+Documentation       Robot frontend test cases for different attributes of the 
+...                 GT Club Explorer site to make sure every feature is easily 
+...                 operable without issue
+Library           SeleniumLibrary
 
-Library             RPA.Browser.Playwright
-Library             RPA.Excel.Files
-Library             RPA.HTTP
+*** Variables ***
+${LOGIN URL}      http://localhost:3000
+${BROWSER}        Chrome
 
-
-*** Tasks ***
-Complete the challenge
-    Start the challenge
-    Fill the forms
-    Collect the results
+*** Test Cases ***
+Valid Login
+    Open Browser To Login Page
+    Input Username    demo
+    Input Password    mode
+    Submit Credentials
+    Welcome Page Should Be Open
+    [Teardown]    Close Browser
 
 
 *** Keywords ***
-Start the challenge
+Sign In
     Open Browser
     New Page    http://rpachallenge.com/
     RPA.HTTP.Download
@@ -25,13 +27,13 @@ Start the challenge
     ...    overwrite=True
     Click    button
 
-Fill the forms
+Sign Up
     ${people}=    Get the list of people from the Excel file
     FOR    ${person}    IN    @{people}
         Fill and submit the form    ${person}
     END
 
-Get the list of people from the Excel file
+Create 
     Open Workbook    challenge.xlsx
     ${table}=    Read Worksheet As Table    header=True
     Close Workbook
