@@ -2,6 +2,22 @@ import Head from 'next/head';
 import NavBar from "../components/NavBar";
 import { Button, Center, Box, Image, Flex, Badge, Text, ButtonGroup, Heading, Container, SimpleGrid, HStack } from '@chakra-ui/react';
 
+
+const teamMembers = [
+  {
+    name: 'Ian Valderas',
+    role: 'Front-End Developer, Front-End Testing',
+    bio: 'bio here',
+    imageUrl: 'img/ian.jpg',
+  },
+  {
+    name: 'Ganning Xu',
+    role: 'Project Manager',
+    bio: 'bio here',
+    imageUrl: 'ganning.jpg',
+  },
+  // Add more team members as needed
+];
 export default function Home()
 {
   return (
@@ -87,6 +103,39 @@ export default function Home()
           ))}
         </SimpleGrid>
       </Container>
+      <Flex direction="column" align="center" justify="center" py={8}>
+      <Text fontSize="3xl" fontWeight="bold" mb={4}>
+        About Us
+      </Text>
+      {teamMembers.map((member, index) => (
+        <Box key={index} mb={8} textAlign="center">
+          <Center>
+            <Image src={member.imageUrl} alt={member.name} borderRadius="full" boxSize="150px" mb={4} />
+          </Center>
+          <Text fontSize="xl" fontWeight="bold" mb={2}>
+            {member.name}
+          </Text>
+          <Text fontSize="md" fontWeight="bold" mb={2} color="gray.500">
+            {member.role}
+          </Text>
+          <Text>{member.bio}</Text>
+        </Box>
+      ))}
+      <Box mt={8} textAlign="center">
+        <Text fontSize="2xl" fontWeight="bold" mb={2}>
+          Contact Us
+        </Text>
+        <Text>
+          For any questions, please reach out to{' '}
+          <Text as="u" color="blue.500"> 
+            <a href="mailto:clubexplorer.gt@gmail.com" target="_blank" rel="noopener noreferrer">
+              clubexplorer.gt@gmail.com
+            </a>
+          </Text>
+        </Text>
+      </Box>
+    </Flex>
+    
     </div>
   );
 }
