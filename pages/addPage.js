@@ -3,9 +3,11 @@ import NavBar from "../components/NavBar";
 import React, { useState, useEffect} from "react";
 import { useRouter } from 'next/router';
 import {
-   InputGroup, InputRightAddon, FormControl, FormLabel, FormErrorMessage, Switch, Slider, SliderTrack, SliderFilledTrack, SliderThumb, SliderMark, VStack, Input, IconButton, Button, Center, Box, Image, Flex, Badge, Text, Textarea, ButtonGroup, Heading, Container, SimpleGrid, HStack, Avatar, Select, Tag, TagCloseButton, TagLabel 
+   InputGroup, InputRightAddon, InputLeftAddon, FormControl, FormLabel, FormErrorMessage, Switch, Slider, SliderTrack, SliderFilledTrack, Icon, SliderThumb, SliderMark, VStack, Input, IconButton, Button, Center, Box, Image, Flex, Badge, Text, Textarea, ButtonGroup, Heading, Container, SimpleGrid, HStack, Avatar, Select, Tag, TagCloseButton, TagLabel 
   } from '@chakra-ui/react';
 import { CloseIcon } from '@chakra-ui/icons';
+import { MdOutlineEmail } from "react-icons/md";
+import { FaGlobe, FaInstagram, FaFacebookSquare, FaSlack , FaDiscord } from "react-icons/fa";
 const clubTagOptions = ["STEM", "Humanities/Art", "Honor Society", "Volunteering", "Career Oriented", "Greek Life", "Outdoors", "Athletics"];
 const colorSchemes = ["teal", "red", "blue", "green", "purple", "orange", "pink", "cyan", "yellow"];
 
@@ -131,6 +133,12 @@ export default function addClub() {
     console.log("FAQ List:", faqList);
   }, [faqList]);
   
+  const [emailLink, setEmailLink] = useState("");
+  const [websiteLink, setWebsiteLink] = useState("");
+  const [instagramLink, setInstagramLink] = useState("");
+  const [facebookLink, setFacebookLink] = useState("");
+  const [slackLink, setSlackLink] = useState("");
+  const [discordLink, setDiscordLink] = useState("");
 
   const [icon, setIcon] = useState("");
   const [iconError, setIconError] = useState("");
@@ -151,8 +159,12 @@ export default function addClub() {
     setDisplayFiles([...displayFiles, ...selectedFiles]);
   }
 
+  useEffect(() => {
+    console.log("displayFiles:", displayFiles);
+  }, [displayFiles]);
+
   const router = useRouter();
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
 
     setClubNameError("");
     setRepNameError("");
@@ -220,8 +232,50 @@ export default function addClub() {
       setDisplayFilesError("Club display images are required");
       isValid = false;
     }
+
     if (isValid) {
-      router.push("/submitPage");
+
+      const clubData =     {
+        "name": clubName,
+        "repName": repName,
+        "repEmail": GTEmail + "@gatech.edu",
+        "slug": (() => clubName.toLowerCase().replace(/\s+/g, '-'))(),
+        "tags": selectedClubTags,
+        "media": {
+            "logo": "",
+            "banner": "",
+            "images": ""
+        },
+        "links": {
+            "email": emailLink,
+            "website": websiteLink,
+            "instagram": instagramLink,
+            "facebook": facebookLink,
+            "slack": slackLink,
+            "discord": discordLink
+        },
+        "meetingTimes": meetingTimes,
+        "numMembers": numMembers,
+        "appType": hasApplication ? "Application" : "No Application",
+        "commitmentTime": commHours,
+        "shortDesc": shortDescription,
+        "longDesc": longDescription,
+        "faq": faqList,
+      }
+      try {
+        const response = await fetch('/api/AddClubToMongo', {
+          method: 'POST',
+          body: JSON.stringify(clubData),
+        });
+
+        if (response.ok) {
+          router.push("/submitPage");
+        } else {
+          console.error('Failed to add club.');
+        }
+      } catch (error) {
+        console.error('An error occurred while adding the club:', error);
+      }
     }
   }
 
@@ -294,7 +348,7 @@ export default function addClub() {
             <Button mt="3" onClick={handleMeetingTimeAdd} color="white" bg="blue.700">Add Meeting Time</Button>
             <Box mt="3">
               {meetingTimes.map((time) => (
-                <Tag key={time} size="md" borderRadius="full" variant="solid" olor="white" bg="blue.700" m="1">
+                <Tag key={time} size="md" borderRadius="full" variant="solid" color="white" bg="blue.700" m="1">
                   <TagLabel>{time}</TagLabel>
                   <TagCloseButton onClick={() => handleMeetingTimeRemove(time)} />
                 </Tag>
@@ -368,6 +422,29 @@ export default function addClub() {
               <SliderMark mt="3" fontWeight="bold" value={0}>0</SliderMark>
               <SliderMark mt="3" fontWeight="bold" value={20}>20+</SliderMark>
             </Slider>
+          </FormControl>
+          
+          <FormControl mt="8">
+            <FormLabel fontWeight="bold">Club Links:</FormLabel>
+            <SimpleGrid columns={[3, 2]} spacing={4}>
+              {[
+                { name: 'Email', icon: <Icon as={MdOutlineEmail} boxSize={8} />, setState: setEmailLink },
+                { name: 'Website', icon: <Icon as={FaGlobe} boxSize={8} />, setState: setWebsiteLink },
+                { name: 'Instagram', icon: <Icon as={FaInstagram} boxSize={8} />, setState: setInstagramLink },
+                { name: 'Facebook', icon: <Icon as={FaFacebookSquare} boxSize={8} />, setState: setFacebookLink },
+                { name: 'Slack', icon: <Icon as={FaSlack} boxSize={8} />, setState: setSlackLink },
+                { name: 'Discord', icon: <Icon as={FaDiscord} boxSize={8} />, setState: setDiscordLink },
+              ].map((link) => (
+                <React.Fragment key={link.name}>
+                  <FormControl>
+                    <InputGroup>
+                      <InputLeftAddon children={link.icon} />
+                      <Input placeholder={`Enter ${link.name} Link`} value={link.state} onChange={(e) => link.setState(e.target.value)} />
+                    </InputGroup>
+                  </FormControl>
+                </React.Fragment>
+              ))}
+            </SimpleGrid>
           </FormControl>
 
           <FormControl isRequired isInvalid={longDescriptionError !== ""} mt="8">
