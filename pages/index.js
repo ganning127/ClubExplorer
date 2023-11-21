@@ -70,7 +70,7 @@ export default function Home()
           justifyContent="center"
           alignItems="center"
           flexWrap="wrap"
-          paddingBottom={40}
+          paddingBottom={20}
         >
           {Array.from({ length: 3 }).map((_, index) => (
             <Box
