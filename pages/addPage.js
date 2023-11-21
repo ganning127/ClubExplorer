@@ -266,6 +266,9 @@ export default function addClub() {
         const response = await fetch('/api/AddClubToMongo', {
           method: 'POST',
           body: JSON.stringify(clubData),
+          headers: {
+            'Content-Type': 'application/json',
+          },
         });
 
         if (response.ok) {
