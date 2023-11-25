@@ -8,6 +8,9 @@ import NavBar from "../components/NavBar";
 import Filters from "../components/Filters";
 import Card from "../components/ExploreCard";
 import SearchBar from "../components/SearchBar";
+import { FaRegHandPointer } from 'react-icons/fa';
+import { useRouter } from 'next/router';
+
 
 
 // param `initialClubs` is an object with data for each club initially pulled from Mongo via `getServerSideProps()`
@@ -21,8 +24,28 @@ export default function Explore({ success, initialClubs })
     const scrollContainer = useRef(null);
     let isThrottled = false;
     let moreCardsExist = true;
+    const router = useRouter();
 
 
+    const handleSearch = async (event) =>
+    {
+        console.log(event.target.value);
+        const resp = await fetch('/api/search-clubs', {
+            headers: {
+                value: event.target.value
+            }
+        });
+
+        if (resp.status == 500)
+        {
+            router.reload();
+            return;
+        }
+
+        const data = await resp.json();
+        console.log("DATA:", data);
+        setClubs(data);
+    };
     const fetchMoreCards = async (currentSkip) =>
     {
         setLoading(true);
@@ -129,7 +152,12 @@ export default function Explore({ success, initialClubs })
                     gridColumn={{ base: 1, md: 2 }} gridRow="1"
                     display="flex" justifyContent="center" alignItems="center"
                 >
-                    <SearchBar />
+
+                    <Input
+                        maxW="600px" placeholder="Search organizations"
+                        borderWidth={2} borderRadius="full"
+                        onChange={handleSearch}
+                    />
                 </Box>
 
 
