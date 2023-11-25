@@ -11,6 +11,7 @@ export default async function AddClubToMongo(req, res)
     const collection = db.collection("clubsMain");
 
     const result = await collection.insertOne(clubData);
+    await db.collection('sortedClubs').insertOne(clubData);
 
     if (result.acknowledged)
     {

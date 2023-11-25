@@ -198,7 +198,7 @@ export async function getServerSideProps(context)
 
         const client = await clientPromise;
         const db = client.db("clubs");
-        const collection = db.collection("clubsMain");
+        const collection = db.collection("sortedClubs");
 
         const limit = 12;  // how many clubs to fetch initially 
 
@@ -215,7 +215,6 @@ export async function getServerSideProps(context)
 
     } catch (e)
     {
-
         console.error(e);
         return {
             props: { success: false },

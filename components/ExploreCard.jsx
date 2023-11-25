@@ -13,7 +13,7 @@ export default function ExploreCard({ club, index })
 
                 {club.media.images && club.media.images.length > 0 && <Img src={club.media.images[0]} rounded='md' />}
                 <Heading fontSize="lg" mt={4}>
-                    {club.name} {club.score}
+                    {club.name}
                 </Heading>
 
                 {/* <Text>{club._id}</Text>   */}

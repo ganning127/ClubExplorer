@@ -61,7 +61,10 @@ export default async function handler(req, res)
 
     }
 
-    let verifyClubs = await collection.find({}).toArray();
+    let verifyClubs = await collection.find({}).sort({ score: -1 }).toArray();
+    const newCollection = db.collection("sortedClubs");
+    newCollection.insertMany(verifyClubs);
+
 
 
 
