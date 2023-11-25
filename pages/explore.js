@@ -145,7 +145,7 @@ export default function Explore({ success, initialClubs })
                 >{
                         clubs.map((club, index) =>
                         {
-                            return <Card club={club} key={index} />;
+                            return <Card club={club} index={index} />;
                         })
                     }
 
