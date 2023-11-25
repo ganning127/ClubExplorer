@@ -29,7 +29,7 @@ export default function Page({ club })
             </Head>
 
             <NavBar />
-            <Box
+            {club.media.banner && <Box
                 display="flex"
                 justifyContent="center"
                 alignItems="center"
@@ -41,7 +41,7 @@ export default function Page({ club })
                     height="100px"
                     objectFit="cover"
                 />
-            </Box>
+            </Box>}
 
             <Container maxW='container.xl' mx="auto" spacing={16} mb={16}>
                 <Flex alignItems="center">
@@ -62,11 +62,16 @@ export default function Page({ club })
 
                         <Box my={2}>
                             {
-                                club.tags.map((e, i) =>
+                                club.tags.map((tag, index) =>
                                 {
                                     let ml = 4;
+
+                                    if (tag?.name)
+                                    {
+                                        return <Badge key={index} colorScheme={tag.colorScheme} fontSize='md' ml={index == 0 ? 0 : ml}>{tag.name} </Badge>;
+                                    }
                                     return (
-                                        <Badge key={i} colorScheme='blue' fontSize='md' ml={i == 0 ? 0 : ml}>{e}</Badge>
+                                        <Badge key={index} colorScheme="blue" fontSize='md' ml={index == 0 ? 0 : ml}>{tag}</Badge>
                                     );
                                 })
                             }
@@ -87,7 +92,7 @@ export default function Page({ club })
                         navigation
                         pagination={{ clickable: true }}
                     >
-                        {club.media.images.map((photo, index) => (
+                        {club.media.images.length > 0 && club.media.images.map((photo, index) => (
                             <SwiperSlide key={index}>
                                 <Image src={photo} alt={`Photo ${index + 1}`} maxH='300px' mx='auto' />
                             </SwiperSlide>
