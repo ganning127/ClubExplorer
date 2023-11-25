@@ -205,6 +205,7 @@ export async function getServerSideProps(context)
         let clubs = await collection.find({}).limit(limit).toArray();
         clubs = JSON.parse(JSON.stringify(clubs));
 
+        console.log(clubs);
         return {
             props: {
                 success: true,
