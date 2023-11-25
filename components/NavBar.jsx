@@ -263,6 +263,10 @@ const NAV_ITEMS = [
     label: 'Explore',
     href: "/explore",
   },
+  {
+    label: "Add Club",
+    href: "add-club"
+  }
   // {
   //   label: 'My Clubs',
   //   href: '#',

@@ -8,7 +8,7 @@ const s3bucket = process.env.S3_BUCKET;
 
 export default async function s3upload(req, res)
 {
-    console.log(req);
+    // console.log(req);
     const s3 = new S3Client({
         region: s3region,
         credentials: {
@@ -17,16 +17,23 @@ export default async function s3upload(req, res)
         },
     });
 
+
     // const key = `${Date.now().toString()}` + "-" + req.files.image.name;
-    const key = Date.now().toString();
 
     const body = req.body;
+
+    console.log(JSON.stringify(body));
+    const key = Date.now().toString();
+
+
+    console.log("KEY IS" + key);
 
     console.log("Connected");
     const params = {
         Bucket: s3bucket,
         Key: key,
         Body: body,
+        'Content-Type': 'text/plain'
     };
     // sometimes wants req.files.file.data
 
