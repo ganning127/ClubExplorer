@@ -14,7 +14,6 @@ export default function Home()
       <NavBar />
 
       <Container maxW='container.lg' mx="auto" spacing={16}>
-
         <SimpleGrid columns={{ base: 1, lg: 2 }} alignItems='center' mt={8} textAlign={{ base: "center", lg: "left" }}>
           <Box>
             <Heading fontSize={{ base: '5xl', lg: '7xl' }} fontWeight='extrabold'>Georgia Tech <br /> <Text as='span' color='#16425B'>Club Explorer</Text></Heading>
