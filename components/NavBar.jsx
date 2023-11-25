@@ -16,14 +16,15 @@ import
   useColorModeValue,
   useBreakpointValue,
   useDisclosure,
-} from '@chakra-ui/react';
-import
-{
+  Image,
+} from '@chakra-ui/react'
+import {
   HamburgerIcon,
   CloseIcon,
   ChevronDownIcon,
   ChevronRightIcon,
-} from '@chakra-ui/icons';
+} from '@chakra-ui/icons'
+import { SignInButton, SignOutButton, SignUpButton, SignedIn, SignedOut, UserButton } from '@clerk/nextjs'
 
 export default function WithSubnavigation()
 {
@@ -58,39 +59,38 @@ export default function WithSubnavigation()
           />
         </Flex>
         <Flex flex={{ base: 1 }} justify={{ base: 'center', md: 'start' }}>
-          <Text
-            textAlign={useBreakpointValue({ base: 'center', md: 'left' })}
-            fontFamily={'heading'}
-            color="white">
-            Logo
-          </Text>
 
+            <Image boxSize='40px' src='/img/GTClubExplorerLogo (2).png' alt='GT Club Explorer Logo' />
           <Flex display={{ base: 'none', md: 'flex' }} ml={10}>
             <DesktopNav />
           </Flex>
         </Flex>
-
         <Stack
           flex={{ base: 1, md: 0 }}
           justify={'flex-end'}
           direction={'row'}
           spacing={6}>
-          <Button as={'a'} fontSize={'sm'} fontWeight={400} variant={'link'} href={'#'} color='white'>
-            Sign In
-          </Button>
-          <Button
-            as={'a'}
-            display={{ base: 'none', md: 'inline-flex' }}
-            fontSize={'sm'}
-            fontWeight={600}
-            color={'white'}
-            bg={'#16425B'}
-            href={'#'}
-            _hover={{
-              bg: 'pink.300',
-            }}>
-            Sign Up
-          </Button>
+            <SignedOut>
+              <Button as={'a'} fontSize={'sm'} fontWeight={400} variant={'link'} href={'sign-in'} color='white'>
+                Sign In
+              </Button>
+              <Button
+                as={'a'}
+                display={{ base: 'none', md: 'inline-flex' }}
+                fontSize={'sm'}
+                fontWeight={600}
+                color={'white'}
+                bg={'#16425B'}
+                href={'sign-up'}
+                _hover={{
+                  bg: 'pink.300',
+                }}>
+                Sign Up
+              </Button>
+            </SignedOut>
+            <SignedIn>
+              <UserButton afterSignOutUrl="/"/>
+            </SignedIn>
         </Stack>
       </Flex>
 
