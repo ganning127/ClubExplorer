@@ -11,88 +11,122 @@ import SearchBar from "../components/SearchBar";
 
 
 // param `initialClubs` is an object with data for each club initially pulled from Mongo via `getServerSideProps()`
-export default function Explore({ success, initialClubs })
-{
+export default function Explore({ success, initialClubs }) {
 
     const [clubs, setClubs] = useState(initialClubs);  // initially populated by `getServerSideProps`; then appended with `fetchMoreCards` 
     const [skip, setSkip] = useState(initialClubs.length);  // # of items to skip over in db query (because already fetched) 
     const [loading, setLoading] = useState(false);
+
     const limit = 6;  // how many clubs to fetch at a time 
     const scrollContainer = useRef(null);
     let isThrottled = false;
     let moreCardsExist = true;
 
 
-    const fetchMoreCards = async (currentSkip) =>
-    {
+    // general function for fetching when the user scrolls down; decides whether to get from search results or all cards 
+    const fetchMoreCards = async (currentSkip) => {
+        
         setLoading(true);
-
-        if (!moreCardsExist) return;
+        if (!moreCardsExist) return;  // might need an analogue of this for search results also 
         if (isThrottled) return;
         isThrottled = true;
 
-        try
-        {
-            const response = await fetch(`/api/getExploreCardData?skip=${currentSkip}&limit=${limit}`);
-            if (response.ok)
-            {
-                const newClubs = await response.json();
+        // if there is currently a search term, get more search results 
+        if (searchTerm) {
+            const searchResults = await searchClubs(searchTerm); 
+            setClubs(prevClubs => [...prevClubs, ...searchResults]);
 
-                if (newClubs.length > 0)
-                {
-                    // Use functional updates to ensure you're using the most recent previous state when updating current state
-                    setClubs(prevClubs => [...prevClubs, ...newClubs]);
-                    setSkip(prevSkip => prevSkip + limit);
-                } else
-                {
-                    console.log("All cards have been fetched.");
-                    moreCardsExist = false;
-                }
-
-
-            } else
-            {
-                console.error('HTTP error when fetching new cards: ', response.status, response.statusText);
-            }
-
-            setLoading(false);
-
-        } catch (e)
-        {
-            console.error('Error when fetching new cards: ', e);
+        // if there is not currently a search term, get more results from list of all clubs 
+        } else {
+            const moreClubs = await getFromAllCards(currentSkip);
+            setClubs(prevClubs => [...prevClubs, ...moreClubs]);
         }
 
         // to prevent multiple concurrent calls which may create weird behavior 
-        setTimeout(() =>
-        {
+        setTimeout(() => {
             isThrottled = false;
         }, 200);
     };
 
 
-    useEffect(() =>
-    {
+    // actual functionality to get results from the search API is here 
+    async function searchClubs(searchTerm) {
 
-        const handleScroll = () =>
-        {
+        const response = await fetch(`/api/searchClubs?searchTerm=${encodeURIComponent(event.target.value)}&skip=${skip}&limit=${limit}`);
+        const data = await response.json();
+        return data; 
+    }
 
-            // find whether the user has scrolled to the bottom of the grid 
-            const cardGrid = scrollContainer.current;
-            const offset = 50;  // will fetch more cards when you scroll to within this many px of the bottom 
-            const isNearBottom = cardGrid.scrollTop + cardGrid.clientHeight + offset >= cardGrid.scrollHeight;
 
-            if (isNearBottom)
-            {
-                fetchMoreCards(skip);
+    // fetches more cards from the list of all cards 
+    async function getFromAllCards(currentSkip) {
+        try {
+            const response = await fetch(`/api/getExploreCardData?skip=${currentSkip}&limit=${limit}`);
+            if (response.ok) {
+
+                const newClubs = await response.json();
+                if (newClubs.length > 0) {
+                    // Use functional updates to ensure you're using the most recent previous state when updating current state
+                    setClubs(prevClubs => [...prevClubs, ...newClubs]);
+                    setSkip(prevSkip => prevSkip + limit);
+                } else {
+                    console.log("All cards have been fetched.");
+                    moreCardsExist = false;
+                }
+            } else {
+                console.error('HTTP error when fetching new cards: ', response.status, response.statusText);
             }
-        };
+            setLoading(false);
+
+        } catch (e) {
+            console.error('Error when fetching new cards: ', e);
+        }
+    }
+
+
+
+
+    // gets passed to SearchBar component as a prop 
+    const handleSearch = async (searchTerm) => {
+        
+        // avoid searching with an empty string to avoid MongoDB errors 
+        if (searchTerm === '') {
+            setSkip(0); 
+            setClubs(initialClubs); 
+            return; 
+        }
+
+        try {
+            const data = searchClubs(searchTerm); 
+            setClubs(data); 
+
+        } catch (error) {
+            console.error("Failed to retrieve search results: ", error); 
+        }
+    }
+
+
+
+    const handleScroll = () => {
+        // find whether the user has scrolled to the bottom of the grid 
+        const cardGrid = scrollContainer.current;
+        const offset = 50;  // will fetch more cards when you scroll to within this many px of the bottom 
+        const isNearBottom = cardGrid.scrollTop + cardGrid.clientHeight + offset >= cardGrid.scrollHeight;
+
+        if (isNearBottom) {
+            fetchMoreCards(skip);
+        }
+    };
+
+
+
+    useEffect(() => {
 
         const cardGrid = scrollContainer.current;
         cardGrid.addEventListener("scroll", handleScroll);
 
         // this runs when the component unmounts and before each subsequent time useEffect runs 
-        return () =>
-        {
+        return () => {
             cardGrid.removeEventListener("scroll", handleScroll);
         };
     }, [skip]);  // useEffect runs on initial render and whenever `skip` is updated 
@@ -129,7 +163,7 @@ export default function Explore({ success, initialClubs })
                     gridColumn={{ base: 1, md: 2 }} gridRow="1"
                     display="flex" justifyContent="center" alignItems="center"
                 >
-                    <SearchBar />
+                    <SearchBar onSearch={handleSearch}/>
                 </Box>
 
 
@@ -143,15 +177,15 @@ export default function Explore({ success, initialClubs })
                     ref={scrollContainer}  // React makes scrollContainer point to this DOM element
 
                 >{
-                        clubs.map((club, index) =>
-                        {
-                            return <Card club={club} index={index} />;
-                        })
-                    }
+                    Array.isArray(clubs) && 
+                    clubs.map((club, index) => {
+                        return <Card club={club} index={index} />;
+                    })
+                }
 
-                    {
-                        loading && <Spinner size='lg' />
-                    }
+                {
+                    loading && <Spinner size='lg' />
+                }
                 </SimpleGrid>
 
 
@@ -159,14 +193,15 @@ export default function Explore({ success, initialClubs })
 
         </>
     );
+
+    
 }
 
 
 
 export async function getServerSideProps(context)
 {
-    try
-    {
+    try {
 
         const client = await clientPromise;
         const db = client.db("clubs");
@@ -184,9 +219,7 @@ export async function getServerSideProps(context)
             }
         };
 
-    } catch (e)
-    {
-
+    } catch (e) {
         console.error(e);
         return {
             props: { success: false },

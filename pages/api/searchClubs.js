@@ -7,9 +7,8 @@ export default async function handler(req, res) {
     const collection = db.collection("clubsMain"); 
 
     const searchTerm = req.query.searchTerm; 
-    
-    console.log(`inside searchClubs.js; search term is: ${searchTerm}`); 
-    console.log(`text if db connection is established: ${await collection.countDocuments()}`) 
+    const skip = parseInt(req.query.skip, 10); 
+    const limit = parseInt(req.query.limit, 10); 
 
     try {
         let results = await collection.aggregate([
@@ -25,6 +24,12 @@ export default async function handler(req, res) {
                         }
                     }
                 }
+            }, 
+            {
+                $skip: skip * limit
+            }, 
+            {
+                $limit: limit
             }
         ]).toArray(); 
         console.log(results); 
