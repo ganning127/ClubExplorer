@@ -2,7 +2,7 @@ import Head from 'next/head';
 import { useRouter } from 'next/router';
 import clientPromise from '../../lib/mongodb';
 import NavBar from '../../components/NavBar';
-import { Container, Box, Image, Heading, Badge, Avatar, Flex, Text, Divider } from '@chakra-ui/react';
+import { Container, Box, Image, Heading, Badge, SimpleGrid, Avatar, Flex, Text, Divider, Icon, Link, HStack } from '@chakra-ui/react';
 
 // Markdown Parser imports
 import dynamic from 'next/dynamic';
@@ -18,6 +18,10 @@ import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import 'swiper/css/scrollbar';
+import { FaInstagram, FaGlobe, FaFacebookF } from "react-icons/fa";
+import { MdEmail } from "react-icons/md";
+
+
 
 export default function Page({ club })
 {
@@ -78,8 +82,76 @@ export default function Page({ club })
                         </Box>
                         <Text fontSize='lg'>{club.shortDesc}</Text>
 
+
+
                     </Box>
                 </Flex>
+
+                <Divider mt={4} borderColor='gray.500' />
+
+                <SimpleGrid columns={{ base: 1, md: 2 }} spacing={8}>
+                    <Box>
+                        <Text fontSize='xl' mt={2} textDecoration='underline' fontWeight='bold'>FAQ</Text>
+                        {
+                            club.faq.map((e, i) =>
+                            {
+                                return (
+                                    <Box mt={2}>
+                                        <Text fontWeight='bold'>
+                                            {e.question}
+                                        </Text>
+                                        <Text>{e.answer}</Text>
+                                    </Box>
+                                );
+                            })
+                        }
+                    </Box>
+
+                    <Box>
+                        <Text fontSize='xl' mt={2} textDecoration='underline' fontWeight='bold'>FAQ</Text>
+
+                        <Text><Text as='span' fontWeight='bold'>Meeting Times</Text>: {club.meetingTimes}</Text>
+
+                        <Text><Text as='span' fontWeight='bold'># Members</Text>: {club.numMembers}</Text>
+
+                        <Text><Text as='span' fontWeight='bold'>Weekly Commitment</Text>: {club.commitmentTime}</Text>
+
+
+                        <Text><Text as='span' fontWeight='bold'>Last Updated</Text>: {new Date(club.lastUpdated).toLocaleDateString()}</Text>
+
+                        <Text fontSize='xl' mt={2} textDecoration='underline' fontWeight='bold'>Socials</Text>
+
+
+                        <HStack spacing={4}>
+                            {club.links.insta && <Link href={club.links.insta} as='a'>
+                                <Icon as={FaInstagram} w={8} h={8} color='red.500' _hover={{
+                                    color: 'blue.900'
+                                }} />
+                            </Link>}
+
+                            {club.links.website && <Link href={club.links.website} as='a'>
+                                <Icon as={FaGlobe} w={8} h={8} color='blue.500' _hover={{
+                                    color: 'blue.900'
+                                }} />
+                            </Link>}
+
+
+                            {club.links.facebook && <Link href={club.links.facebook} as='a'>
+                                <Icon as={FaFacebookF} w={8} h={8} color='blue.300' _hover={{
+                                    color: 'blue.900'
+                                }} />
+                            </Link>}
+
+                            {club.links.email && <Link href={`mailto:${club.links.email}`} as='a'>
+                                <Icon as={MdEmail} w={8} h={8} color='purple.300' _hover={{
+                                    color: 'blue.900'
+                                }} />
+                            </Link>}
+                        </HStack>
+
+
+                    </Box>
+                </SimpleGrid>
 
                 <Divider mt={4} borderColor='gray.500' />
 
