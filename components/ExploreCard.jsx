@@ -11,7 +11,7 @@ export default function ExploreCard({ club, index })
                 transition: "all .2s"
             }}>
 
-                {club.media.images && <Img src={club.media.images[0]} rounded='md' />}
+                {club.media.images && club.media.images.length > 0 && <Img src={club.media.images[0]} rounded='md' />}
                 <Heading fontSize="lg" mt={4}>
                     {club.name}
                 </Heading>
@@ -22,6 +22,10 @@ export default function ExploreCard({ club, index })
                 <HStack mt={2} flexWrap="wrap" justifyContent={{ base: "center", lg: "left" }}> {
                     club.tags.map((tag, index) =>
                     {
+                        if (tag?.name)
+                        {
+                            return <Badge key={index} colorScheme={tag.colorScheme}>{tag.name}</Badge>;
+                        }
                         return (
                             <Badge key={index} colorScheme="blue">{tag}</Badge>
                         );
