@@ -17,14 +17,15 @@ import
   useBreakpointValue,
   useDisclosure,
   Image,
-} from '@chakra-ui/react'
-import {
+} from '@chakra-ui/react';
+import
+{
   HamburgerIcon,
   CloseIcon,
   ChevronDownIcon,
   ChevronRightIcon,
-} from '@chakra-ui/icons'
-import { SignInButton, SignOutButton, SignUpButton, SignedIn, SignedOut, UserButton } from '@clerk/nextjs'
+} from '@chakra-ui/icons';
+import { SignInButton, SignOutButton, SignUpButton, SignedIn, SignedOut, UserButton } from '@clerk/nextjs';
 
 export default function WithSubnavigation()
 {
@@ -60,7 +61,7 @@ export default function WithSubnavigation()
         </Flex>
         <Flex flex={{ base: 1 }} justify={{ base: 'center', md: 'start' }}>
 
-            <Image boxSize='40px' src='/img/GTClubExplorerLogo (2).png' alt='GT Club Explorer Logo' />
+          <Image maxH='40px' src='/img/GTClubExplorerLogo (2).png' alt='GT Club Explorer Logo' />
           <Flex display={{ base: 'none', md: 'flex' }} ml={10}>
             <DesktopNav />
           </Flex>
@@ -70,27 +71,33 @@ export default function WithSubnavigation()
           justify={'flex-end'}
           direction={'row'}
           spacing={6}>
-            <SignedOut>
-              <Button as={'a'} fontSize={'sm'} fontWeight={400} variant={'link'} href={'sign-in'} color='white'>
-                Sign In
-              </Button>
-              <Button
-                as={'a'}
-                display={{ base: 'none', md: 'inline-flex' }}
-                fontSize={'sm'}
-                fontWeight={600}
-                color={'white'}
-                bg={'#16425B'}
-                href={'sign-up'}
-                _hover={{
-                  bg: 'pink.300',
-                }}>
-                Sign Up
-              </Button>
-            </SignedOut>
-            <SignedIn>
-              <UserButton afterSignOutUrl="/"/>
-            </SignedIn>
+          <SignedOut>
+            <Button
+              as={'a'}
+              fontSize='sm'
+              display={{ base: 'none', md: 'inline-flex' }}
+              color={'white'}
+              href={'sign-up'}
+              _hover={{
+                color: 'blue.500'
+              }}
+              variant='link'
+              bg=""
+            >
+              Sign Up
+            </Button>
+            <Button as={'a'} fontSize={'sm'} bg='blue.400'
+              px={2}
+              py={1}
+              _hover={{
+                bg: 'blue.500'
+              }} variant={'link'} href={'sign-in'} color='white'>
+              Sign In
+            </Button>
+          </SignedOut>
+          <SignedIn>
+            <UserButton afterSignOutUrl="/" />
+          </SignedIn>
         </Stack>
       </Flex>
 
@@ -110,7 +117,7 @@ const DesktopNav = () =>
   return (
     <Stack direction={'row'} spacing={4}>
       {NAV_ITEMS.map((navItem) => (
-        <Box key={navItem.label}>
+        <Box key={navItem.label} m={0} p={0} alignSelf='center'>
           <Popover trigger={'hover'} placement={'bottom-start'}>
             <PopoverTrigger>
               <Box
@@ -145,8 +152,9 @@ const DesktopNav = () =>
             )}
           </Popover>
         </Box>
-      ))}
-    </Stack>
+      ))
+      }
+    </Stack >
   );
 };
 
@@ -248,7 +256,11 @@ const MobileNavItem = ({ label, children, href }) =>
 
 const NAV_ITEMS = [
   {
-    label: 'Club Dashboard',
+    label: "Home",
+    href: "/"
+  },
+  {
+    label: 'Explore',
     href: "/explore",
   },
   // {

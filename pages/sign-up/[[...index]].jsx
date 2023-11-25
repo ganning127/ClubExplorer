@@ -2,6 +2,8 @@ import { SignUp } from "@clerk/nextjs";
 
 const SignUpPage = () => (
   <center>
+    <title>Sign Up | GT Club Explorer</title>
+
     <SignUp
       path="/sign-up"
       routing="path"
