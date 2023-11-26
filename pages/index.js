@@ -13,8 +13,44 @@ const teamMembers = [
   {
     name: 'Ian Valderas',
     role: 'Front-End Developer, Front-End Testing',
-    bio: 'bio here',
+    bio: 'I developed a deep love for computers, diving into programming languages and working for tech companies to enhance my understanding. This same passion fuels the diverse projects I work on today that ranged from Automation Development, Web Development, Game Development, and much more. Beyond coding, I find balance in hobbies like golf, video games, Arduino tinkering, and staying active by working out at the gym.',
     imageUrl: 'img/ian.jpg',
+  },
+  {
+    name: 'Jonathan',
+    role: 'Front-End Developer, Back-End Developer',
+    bio: 'While studying physics, I used machine learning and other statistical tools to understand different facets of the world. Over time, it was not enough to understand - I wanted to make things. My interest in programming expanded, and now I look forward to learning and sharpening my skills every day. When I have time, I also enjoy hiking in the North Georgia mountains.',
+    imageUrl: 'img/jiyaski.png',
+  },
+  {
+    name: 'Om',
+    role: 'roles here',
+    bio: 'bio here',
+    imageUrl: 'img/picname.jpg',
+  },
+  {
+    name: 'Justin',
+    role: 'roles here',
+    bio: 'bio here',
+    imageUrl: 'img/picname.jpg',
+  },
+  {
+    name: 'Angelina',
+    role: 'roles here',
+    bio: 'bio here',
+    imageUrl: 'img/picname.jpg',
+  },
+  {
+    name: 'Marie',
+    role: 'roles here',
+    bio: 'bio here',
+    imageUrl: 'img/picname.jpg',
+  },
+  {
+    name: 'Tony',
+    role: 'roles here',
+    bio: 'bio here',
+    imageUrl: 'img/picname.jpg',
   },
   // Add more team members as needed
 ];
