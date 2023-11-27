@@ -43,11 +43,11 @@ export default function Home({ initialClubs })
 
         <Divider my={16} />
 
-        <Heading mb={8} fontSize='3xl' color='#16425B'>Recommended Clubs</Heading>
+        <Heading mb={8} fontSize='3xl' color='#16425B' align='center'>Recommended Clubs</Heading>
 
         <SimpleGrid
           gridColumn={{ base: 1, md: 2 }} gridRow={{ base: 3, md: 2 }}
-          columns={{ base: 1, lg: 2, xl: 3 }}
+          columns={{ base: 1, md: 2, lg: 3 }}
           textAlign={{ base: "center", lg: "left" }}
           spacing={4} alignItems="center" pr={4}
           maxHeight="80vh" overflowY="auto"  // makes content in this element scrollable 
