@@ -10,7 +10,7 @@ export default function Home({ initialClubs })
   return (
     <div className="container">
       <Head>
-        <title>GT Club Explorer Landing Page</title>
+        <title>GT Club Explorer</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
