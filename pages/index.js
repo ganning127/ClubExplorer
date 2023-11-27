@@ -12,7 +12,7 @@ const teamMembers = [
   },
   {
     name: 'Ian Valderas',
-    role: 'Front-End Developer, Front-End Testing',
+    role: 'Front-End Developer, Front-End Testing, Web Designer',
     bio: 'I developed a deep love for computers, diving into programming languages and working for tech companies to enhance my understanding. This same passion fuels the diverse projects I work on today that ranged from Automation Development, Web Development, Game Development, and much more. Beyond coding, I find balance in hobbies like golf, video games, Arduino tinkering, and staying active by working out at the gym.',
     imageUrl: 'img/ian.jpg',
   },
@@ -36,15 +36,15 @@ const teamMembers = [
   },
   {
     name: 'Angelina',
-    role: 'roles here',
-    bio: 'bio here',
-    imageUrl: 'img/picname.jpg',
+    role: 'Front-End Developer, Back-End Developer',
+    bio: 'While coding robots on my high school robotics team, my passion for programming and computer science blossomed. Now, fueled by my belief that understanding technology empowers me to use it to enhance our lives, I am enthusiastic about understanding the intricacies of computer science from computer architecture to theory. Beyond the digital realm, I enjoy skiing, painting, and crocheting!',
+    imageUrl: 'img/angelina.jpg',
   },
   {
-    name: 'Marie',
-    role: 'roles here',
-    bio: 'bio here',
-    imageUrl: 'img/picname.jpg',
+    name: 'Marie Wibisana',
+    role: 'Web Designer',
+    bio: 'My passion lies in creativity, art, storytelling, and cheese. I also play the ukulele and jam to Disney and anime songs! I am currently learning how to code as a beginner.',
+    imageUrl: 'img/marie.jpg',
   },
   {
     name: 'Tony',
