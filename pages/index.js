@@ -1,7 +1,7 @@
 import Head from 'next/head';
 import NavBar from "../components/NavBar";
 import clientPromise from '../lib/mongodb';
-import { Button, Center, Box, Image, Flex, Badge, Text, ButtonGroup, Heading, Container, SimpleGrid, HStack } from '@chakra-ui/react';
+import { Button, Center, Box, Image, Flex, Badge, Text, ButtonGroup, Heading, Container, SimpleGrid, HStack, Divider } from '@chakra-ui/react';
 import Card from "../components/ExploreCard";
 
 
@@ -41,8 +41,11 @@ export default function Home({ initialClubs })
 
         </SimpleGrid>
 
+        <Divider my={16} />
+
+        <Heading mb={8} fontSize='3xl' color='#16425B'>Recommended Clubs</Heading>
+
         <SimpleGrid
-          mt={32}
           gridColumn={{ base: 1, md: 2 }} gridRow={{ base: 3, md: 2 }}
           columns={{ base: 1, lg: 2, xl: 3 }}
           textAlign={{ base: "center", lg: "left" }}
