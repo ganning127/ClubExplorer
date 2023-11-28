@@ -29,9 +29,9 @@ const teamMembers = [
     imageUrl: 'img/picname.jpg',
   },
   {
-    name: 'Justin',
-    role: 'roles here',
-    bio: 'bio here',
+    name: 'Justin Kang',
+    role: 'Backend/Frontend Programmer',
+    bio: 'I began programming in high school, delving deep into topics around machine learning and deep learning. Since then, I have immersed myself in learning more about different technologies, such as cloud computing and web development.',
     imageUrl: 'img/picname.jpg',
   },
   {
