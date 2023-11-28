@@ -265,7 +265,7 @@ const NAV_ITEMS = [
   },
   {
     label: "Add Club",
-    href: "add-club"
+    href: "/add-club"
   }
   // {
   //   label: 'My Clubs',
